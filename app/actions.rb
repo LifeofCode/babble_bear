@@ -2,3 +2,7 @@
 get '/' do
   erb :index
 end
+
+get '/categories' do
+  erb :categories
+end 
