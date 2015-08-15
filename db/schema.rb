@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813213747) do
+ActiveRecord::Schema.define(version: 20150815012006) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "example_pic"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "levels", force: :cascade do |t|
     t.integer  "number"
@@ -34,9 +41,12 @@ ActiveRecord::Schema.define(version: 20150813213747) do
 
   create_table "topics", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
+
+  add_index "topics", ["category_id"], name: "index_topics_on_category_id"
 
   create_table "users", force: :cascade do |t|
     t.string  "first_name"

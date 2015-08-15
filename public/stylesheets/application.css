@@ -1,6 +1,17 @@
 /**{
   border: 1px solid red;
 }*/
+
+/*.background-cheer {*/
+  /*background-image: url("/txtBackgroundBabbleBear.jpg");*/
+  /*position: absolute;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  -webkit-filter: blur(2px);
+}*/
+
 .nav-ul {
   list-style-type: none;
   margin: 15px 10px;
@@ -21,21 +32,45 @@ h1 {
   text-align: center;
 }
 
-#bear {
-  height: 70px;
-  width: 70px;
-}
-
 .nav {
   position: absolute;
   right: 0;
-  width: 10%;
+  width: 11%;
   height: 100%;
   border: 1px solid yellow;
   background-color: yellow;
+}
+
+#bear {
+  height: 70px;
+  width: 70px;
 }
 
 .bear-li {
   position: absolute;
   bottom : 5%;
 }
+
+.categories {
+  position: absolute;
+  margin: auto;
+  background-color: lightgreen;
+  top: 25%;
+  left: 25%;
+  height: 50%;
+  width: 50%;
+}
+
+.category-pic {
+  display: inline-block;
+  height: 70px;
+  width: 70px; 
+  border-radius: 50%;
+}
+
+.category-name {
+  display: inline-block;
+  width: 30%;
+  padding-right: 10%;
+}
+
