@@ -1,13 +1,13 @@
 /**{
   border: 1px solid red;
 }*/
-ul {
+.nav-ul {
   list-style-type: none;
   margin: 15px 10px;
   padding: 50px;
 }
 
-li {
+.nav-li {
   margin: 15px 10px;
 }
 
