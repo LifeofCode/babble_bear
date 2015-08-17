@@ -1,8 +1,8 @@
-<h1> Categories </h1> 
-
 <div class="categories">  
   <% @categories.each do |category| %>
+    <div class="category">
       <img src="<%= category.example_pic %>" class="category-pic">
       <h5 class="category-name"> <%= category.name %> </h5>
+    </div>
   <% end %>
 </div>
