@@ -2,24 +2,10 @@
   border: 1px solid red;
 }*/
 
-/*.background-cheer {*/
-  /*background-image: url("/txtBackgroundBabbleBear.jpg");*/
-  /*position: absolute;
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-  -webkit-filter: blur(2px);
-}*/
-
 body {
-  background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);
+  /*background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);*/
   /*background: -webkit-radial-gradient(circle, white, #66E066, #00CC00);*/
   /*background: -webkit-radial-gradient(circle, white, #ADEBFF, #33CCFF);*/
-}
-
-html {
-  min-height: 100%
 }
 
 .nav-ul {
@@ -37,24 +23,28 @@ a {
   color: black;
 }
 
-#babble-bear {
+#title-babble-bear {
   margin: auto;
   position: absolute;
-  padding-top: 2%;
-  padding-left: 30%;
+  margin-top: 2%;
+  margin-left: 30%;
 }
 
 .nav {
   position: absolute;
   right: 0;
   width: 100%;
-  height: 20%;
+  height: 50%;
+  background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);
 }
 
 #bear {
   height: 80px;
   width: 80px;
-  z-index: 3;
+}
+
+#bear-div {
+  float: right;
 }
 
 .bear-li {
@@ -66,32 +56,54 @@ a {
 .categories {
   position: absolute;
   margin: auto;
-  top: 25%;
-  left: 25%;
-  height: 80%;
-  width: 50%;
+  top: 50%;
+  height: 100%;
 }
 
-.category-pic {
-  display: block;
+/*.category-pic {
+  display: inline-block;
   height: 70px;
   width: 70px; 
   border-radius: 50%;
-}
+}*/
 
 .category-name {
-  display: inline-block;
+  margin: auto;
+  margin-top: 15%; 
+  display: block;
   width: 30%;
   padding-right: 10%;
   cursor: pointer;
 }
 
-.category {
-  transition: all 2s;
-}
-
-.move-left {
+.categories .category {
+  display: inline-block;
+  margin-top: 5%;
+  width: 25%;
+  height: 30%;
   cursor: pointer;
-  padding-left: 15em;
 }
 
+#cat1 {
+  background-color: yellow;
+}
+
+#cat2 {
+  background-color: purple;
+}
+
+#cat3 {
+  background-color: lightblue;
+}
+
+#cat4 {
+  background-color: blue;
+}
+
+#cat5 {
+  background-color: lightgreen;
+}
+
+#cat6 {
+  background-color: red;
+}
