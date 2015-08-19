@@ -55,7 +55,7 @@ a {
 
 .categories {
   position: absolute;
-  margin: auto;
+  text-align: center;
   top: 50%;
   height: 100%;
 }
@@ -78,10 +78,22 @@ a {
 
 .categories .category {
   display: inline-block;
-  margin-top: 5%;
-  width: 25%;
-  height: 30%;
+  text-align: center;
+  margin: 50px;
+  width: 250px;
+  height: 200px;
   cursor: pointer;
+}
+
+
+.category .content {
+  display: table-cell;
+  
+  height: 150px;
+  vertical-align: middle;
+
+  width: 250px;
+  text-align: center
 }
 
 #cat1 {
