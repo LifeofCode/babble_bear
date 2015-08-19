@@ -3,9 +3,9 @@ get '/' do
   erb :index
 end
 
-get '/babblebear' do
+get '/categories' do  
   @categories = Category.all
-  erb :categories
+  @categories.to_json
 end 
 
 get '/topics' do
