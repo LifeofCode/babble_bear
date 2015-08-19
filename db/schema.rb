@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813213747) do
+ActiveRecord::Schema.define(version: 20150816215232) do
 
   create_table "levels", force: :cascade do |t|
     t.integer  "number"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20150813213747) do
     t.string  "profile_image"
     t.integer "animals_level"
     t.integer "fruits_level"
+    t.string  "password_digest"
   end
 
 end

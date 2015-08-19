@@ -1,1 +1,49 @@
-<h1>Home Page</h1>
+<div class="title_div">
+  <h2 class="title">BabbleBear</h2>
+</div>
+
+<div class="filler_space">
+</div>
+
+<div class="login_form">
+  <form method="post" action="/session">
+    <label for="login_email">Email</label>
+    <input class="u-full-width" type="email" placeholder="Email Address" id="login_email" name="email">
+
+    <label for="login_password">Password</label>
+    <input class="u-full-width" type="password" placeholder="Password" id="login_password" name="password">
+
+    <br><br>
+
+    <button class="button-primary" type="submit" role="button" value="Submit">Submit</button>
+  </form>
+  <h6 class="docs-header">
+    <small>Dont have an account? <span class="switch"> Sign up </span></small>
+  </h6>
+
+</div>
+
+<div class="signup_form hidden">
+  <form method="post" action="/signup">
+    <label for="first_name">First Name</label>
+    <input class="u-full-width" type="text" placeholder="First Name" id="first_name" name="first_name">
+
+    <label for="last_name">Last Name</label>
+    <input class="u-full-width" type="text" placeholder="Last Name" id="last_name" name="last_name">
+
+    <label for="signup_email">Email</label>
+    <input class="u-full-width" type="email" placeholder="Email Address" id="signup_email" name="signup_email">
+
+    <label for="signup_password">Password</label>
+    <input class="u-full-width" type="password" placeholder="Password" id="signup_password" name="signup_password">
+
+    <label for="confirm_password">Confirm Password</label>
+    <input class="u-full-width" type="password" placeholder="Password" id="confirm_password" name="confirm_password">
+    <br><br>
+    <button class="button-primary" type="submit" role="button" value="Submit">Submit</button>
+  </form>
+
+    <h6 class="docs-header">
+      <small>Already have an account? <span class="switch"> Log in </span></small>
+    </h6>
+</div>

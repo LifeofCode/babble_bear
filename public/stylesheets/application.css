@@ -1,0 +1,43 @@
+body {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.title_div {
+  text-align: center;
+}
+
+.title {
+  line-height:2.25;
+}
+
+.login_form {
+  text-align: center;
+  margin:auto;
+  width: 35%;
+}
+
+.filler_space {
+  height: 60px;
+}
+
+.docs-header {
+  margin: auto;
+  text-align: center;
+}
+
+.switch:hover {
+  color: #32C3F0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.signup_form {
+  text-align: center;
+  margin:auto;
+  width: 35%;
+}
+
+.hidden {
+  display: none;
+}
