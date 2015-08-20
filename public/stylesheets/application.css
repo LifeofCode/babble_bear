@@ -1,0 +1,16 @@
+.topics_bar {
+	background-color: #d32f2f;
+	height: 100%;
+	width: 35%;
+	float:left;
+	position:absolute;
+	color: white;
+}
+
+.topic_heading {
+	text-align: center;
+}
+
+.border_formatting{
+	margin-left: 10%;
+}
