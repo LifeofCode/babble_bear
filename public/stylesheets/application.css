@@ -1,16 +1,28 @@
-.topics_bar {
-	background-color: #d32f2f;
+.topics-bar {
+	background-color: #e53935;
 	height: 100%;
 	width: 35%;
-	float:left;
 	position:absolute;
 	color: white;
 }
 
-.topic_heading {
+.topic-heading {
 	text-align: center;
 }
 
-.border_formatting{
+.border-formatting{
 	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.level-heading {
+	color: #e53935;
+}
+.levels-bar {
+	margin-left: 35%;
+}
+
+.level-div {
+
+	border-bottom: #9e9e9e solid 1px;
 }
