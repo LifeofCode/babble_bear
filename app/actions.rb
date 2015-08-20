@@ -28,8 +28,6 @@ post '/signup' do
     password_confirmation: params[:confirm_password]
   )
 
-  puts "xxxxxxxxx"
-  puts @user.inspect
 
   if @user.save
     session[:id] = @user.id
@@ -43,4 +41,8 @@ end
 get '/logout' do
   session[:id]=nil
   redirect '/'
+end
+
+get '/levels-view' do
+  erb :levels_view
 end
