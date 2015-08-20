@@ -1,4 +1,5 @@
 $(document).ready(function(){ 
+  
   var handleTopicClick = function(categoryName){
     console.log(categoryName);
   }
@@ -22,6 +23,12 @@ $(document).ready(function(){
     });
   }
 
+  //switch between login and sign up form  
+  $(".switch").click(function(){
+    $(".login_form").toggleClass("hidden");
+    $(".signup_form").toggleClass("hidden");
+  })
+  
 //on load bind click events to handle click on category
   $.ajax({  
     url: "/categories",
