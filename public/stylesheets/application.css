@@ -7,6 +7,7 @@ body {
   /*background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);*/
   /*background: -webkit-radial-gradient(circle, white, #66E066, #00CC00);*/
   /*background: -webkit-radial-gradient(circle, white, #ADEBFF, #33CCFF);*/
+  margin: 0;
 }
 
 .nav-ul {
@@ -34,9 +35,9 @@ a {
 .nav {
   position: absolute;
   right: 0;
-  width: 100%;
-  height: 50%;
-  background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);
+  width: 50%;
+  height: 10%;
+  /*background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);*/
 }
 
 #bear {

@@ -1,7 +1,11 @@
 <div class="categories twelve columns">  
   <% @categories.each do |category| %>
     <div id="cat<%= category.id %>" class="category four columns" data="<%= category.id %>">
+      <div class='content'>
       <h5 class="category-name"> <%= category.name %> </h5>
+      </div>
     </div>
   <% end %>
+
+<a href='/logout'>Logout Here </a>
 </div>

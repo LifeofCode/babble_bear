@@ -5,7 +5,12 @@ end
 
 get '/categories' do  
   @categories = Category.all
-  @categories.to_json
+  
+  if session[:id]
+    erb :categories
+  else
+    redirect '/'
+  end
 end 
 
 get '/categories/:id/topics' do
@@ -15,18 +20,14 @@ end
 
 post '/session' do
   @user = User.find_by(email: params[:email])
+  @categories = Category.all
 
   if @user && @user.authenticate(params[:password])
     session[:id] = @user.id
-    redirect '/landing_page'
-  else redirect '/'
+    redirect '/categories'
+  else 
+    erb :index
   end
-end
-
-get '/landing_page' do
-  "logged in"
-  "Your session id is #{session[:id]}"
-  erb :landing_page
 end
 
 post '/signup' do
@@ -37,13 +38,13 @@ post '/signup' do
     password: params[:signup_password],
     password_confirmation: params[:confirm_password]
   )
-
+  @categories = Category.all
 
   if @user.save
     session[:id] = @user.id
-    redirect '/landing_page'
+    erb :categories
   else
-    redirect '/error'
+    redirect '/'
   end
 
 end

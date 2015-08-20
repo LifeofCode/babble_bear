@@ -29,18 +29,21 @@ $(document).ready(function(){
     $(".signup_form").toggleClass("hidden");
   })
   
-//on load bind click events to handle click on category
-  $.ajax({  
-    url: "/categories",
-    method: "GET",
-    dataType: "json"
-  }).done(function(categories){
-    $("body").append("<div class='categories twelve columns'></div>");
-    $(categories).each(function(index, category){
-      $(".categories").append("<div id='cat" + category.id + "'class='category' data='" + category.id + "'name='" + category.name + "'> <div class='content'><h5 class='category-name'>" + category.name + "</h5></div></div>");
-    });
-    $(".category").on("click", handleCategoryClick);
-  });
+      // //on load bind click events to handle click on category
+      //   $.ajax({  
+      //     url: "/categories",
+      //     method: "GET",
+      //     dataType: "json"
+      //   }).done(function(categories){
+      //     $("body").append("<div class='categories twelve columns'></div>");
+      //     $(categories).each(function(index, category){
+      //       $(".categories").append("<div id='cat" + category.id + "'class='category' data='" + category.id + "'name='" + category.name + "'> <div class='content'><h5 class='category-name'>" + category.name + "</h5></div></div>");
+      //     });
+      //     $(".category").on("click", handleCategoryClick);
+      //   });
+
+  $(".category").on("click", handleCategoryClick);
+  
 
 });
 
