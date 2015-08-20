@@ -60,13 +60,6 @@ a {
   height: 100%;
 }
 
-/*.category-pic {
-  display: inline-block;
-  height: 70px;
-  width: 70px; 
-  border-radius: 50%;
-}*/
-
 .category-name {
   margin: auto;
   margin-top: 15%; 
@@ -84,7 +77,6 @@ a {
   height: 200px;
   cursor: pointer;
 }
-
 
 .category .content {
   display: table-cell;

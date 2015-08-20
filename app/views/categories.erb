@@ -1,6 +1,6 @@
 <div class="categories twelve columns">  
   <% @categories.each do |category| %>
-    <div id="cat<%= category.id %>" class="category four columns">
+    <div id="cat<%= category.id %>" class="category four columns" data="<%= category.id %>">
       <h5 class="category-name"> <%= category.name %> </h5>
     </div>
   <% end %>

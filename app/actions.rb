@@ -8,11 +8,7 @@ get '/categories' do
   @categories.to_json
 end 
 
-get '/categories/topic' do
-  
-end
-
-get '/topics' do
-  @topics = Topic.all
-  @topics.to_json
+get '/categories/:id/topics' do
+  @category = Category.find(params[:id])
+  @topics = @category.topics.to_json
 end
