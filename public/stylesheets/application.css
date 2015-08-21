@@ -171,14 +171,15 @@ a {
 }
 
 .level-heading {
-	color: #e53935;
+  color: #e53935;
 }
+
 .levels-bar {
-	margin-left: 35%;
+  margin-left: 35%;
 }
 
 .level-div {
-	border-bottom: #9e9e9e solid 1px;
+  border-bottom: #9e9e9e solid 1px;
 }
 
 .modalDialog {
@@ -203,7 +204,8 @@ a {
 }
 
 .modalDialog > div {
-  width: 400px;
+  width: 900px;
+  height: 500px;
   position: relative;
   margin: 10% auto;
   padding: 5px 20px 13px 20px;
@@ -212,4 +214,29 @@ a {
   background: -moz-linear-gradient(#fff, #999);
   background: -webkit-linear-gradient(#fff, #999);
   background: -o-linear-gradient(#fff, #999);
+}
+
+.modal-border-formatting{
+  left: 0px;
+  top: 0px;
+}
+
+.modal-questions-bar {
+  margin-left: 300px;
+}
+
+.modal-image-bar {
+  background-color: #e53935;
+  height: 100%;
+  width: 40%;
+  position:absolute;
+  color: white;
+}
+
+.modal-img {
+  position: absolute;
+  margin-left: 25%;
+  margin-top: 40%;
+  height: 200px;
+  width: 200px;
 }

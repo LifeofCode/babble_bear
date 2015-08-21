@@ -3,6 +3,15 @@ get '/' do
   erb :index
 end
 
+get '/logout' do
+  session[:id]=nil
+  redirect '/'
+end
+
+get '/levels' do
+  erb :levels_view
+end
+
 get '/categories' do  
   @categories = Category.all
   
@@ -49,12 +58,4 @@ post '/signup' do
 
 end
 
-get '/logout' do
-  session[:id]=nil
-  redirect '/'
-end
-
-get '/levels-view' do
-  erb :levels_view
-end
 

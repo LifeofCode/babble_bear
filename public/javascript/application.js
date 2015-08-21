@@ -1,9 +1,5 @@
 $(document).ready(function(){ 
   
-  var handleTopicClick = function(categoryName){
-    handleLevelClick();
-  }
-
   var handleCategoryClick = function(){
     var categoryId = $(this).attr("data");
     var categoryName = $(this).attr("name");
@@ -23,25 +19,25 @@ $(document).ready(function(){
     });
   }
 
-  var handleLevelClick = function(){
-    console.log("level clicked")
+  var handleTopicClick = function(categoryName){
+    handleLevelClick();
+  }
 
+  var handleLevelClick = function(){
     var gameView = "<a href='#openModal'>Open Modal</a>" + "<div id='openModal' class='modalDialog'><div>" +
-                        "<a href='#close' title='Close' class='close'>X</a>" +
-                        "<h2>Modal Box</h2>" +
-                        "<p>This is a sample modal box that can be created using the powers of CSS3.</p>" +
-                        "<p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>" +
+                    "<a href='#close' title='Close' class='close'>X</a>" +
+                    "<div id='openModal' class='modalDialog'>" +
+                    "</div>" +
+                    "<div class='border-formatting'>" +
+                      "<div class='modal-image-bar modal-border-formatting'>"+ 
+                        "<img src='/dog_icon.png' class='modal-img'>" + 
+                      "</div>" +
+                      "<div class='modal-questions-bar'>" +
+                        "<div class='level-div'><h3 class='level-heading'><br> Un Chien </h3></div>" +
+                        "<div class='level-div'><h3 class='level-heading'><br> Un chat </h3></div>" +
+                        "<div class='level-div'> <h3 class='level-heading'><br> Une Souris </h3></div>" +
                       "</div>" +
                     "</div>"
-    // $.ajax(
-    //   url: "/levels/" + levelID + "/questions"
-    //   method: "GET", 
-    //   dataType: "json"
-    // }).done(function(questions){
-    //   $("body").empty();
-
-    // });
-    $("body").empty();
     $("body").append(gameView);
   }
 
