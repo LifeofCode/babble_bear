@@ -1,7 +1,7 @@
 $(document).ready(function(){ 
   
   var handleTopicClick = function(categoryName){
-    console.log(categoryName);
+    handleLevelClick();
   }
 
   var handleCategoryClick = function(){
@@ -21,6 +21,28 @@ $(document).ready(function(){
         handleTopicClick(e, categoryName);
       });
     });
+  }
+
+  var handleLevelClick = function(){
+    console.log("level clicked")
+
+    var gameView = "<a href='#openModal'>Open Modal</a>" + "<div id='openModal' class='modalDialog'><div>" +
+                        "<a href='#close' title='Close' class='close'>X</a>" +
+                        "<h2>Modal Box</h2>" +
+                        "<p>This is a sample modal box that can be created using the powers of CSS3.</p>" +
+                        "<p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>" +
+                      "</div>" +
+                    "</div>"
+    // $.ajax(
+    //   url: "/levels/" + levelID + "/questions"
+    //   method: "GET", 
+    //   dataType: "json"
+    // }).done(function(questions){
+    //   $("body").empty();
+
+    // });
+    $("body").empty();
+    $("body").append(gameView);
   }
 
   //switch between login and sign up form  

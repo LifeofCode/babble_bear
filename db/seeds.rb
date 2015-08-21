@@ -17,3 +17,22 @@ Topic.create(name: "Avoir", category_id: @c2.id)
 Topic.create(name: "Aller", category_id: @c2.id)  
 Topic.create(name: "Faire", category_id: @c2.id)  
 
+Level.create(number: 1, topic_id: 1)
+Level.create(number: 2, topic_id: 1)
+Level.create(number: 3, topic_id: 1)
+
+Level.create(number: 1, topic_id: 2)
+Level.create(number: 2, topic_id: 2)
+Level.create(number: 3, topic_id: 2)
+
+Question.create(word: "Un Chien", word_image: "/dog_icon.png", english_word: "Dog", level_id: 1)
+Question.create(word: "Un Chat", word_image: "/cat_icon.png", english_word: "Cat", level_id: 1)
+Question.create(word: "Un Lion", word_image: "/lion_icon.png", english_word: "Lion", level_id: 1)
+Question.create(word: "Un Ours", word_image: "/bear_icon.png", english_word: "Bear", level_id: 1)
+Question.create(word: "Une Souris", word_image: "/mouse_icon.png", english_word: "Mouse", level_id: 1)
+
+Question.create(word: "Un Poisson", word_image: "/nemo_icon.png", english_word: "Fish", level_id: 2)
+Question.create(word: "Un Cochon", word_image: "/pig_icon.png", english_word: "Pig", level_id: 2)
+Question.create(word: "Un Serpent", word_image: "/snake_icon.png", english_word: "Snake", level_id: 2)
+Question.create(word: "Une Tortue", word_image: "/turtle_icon.png", english_word: "Turtle", level_id: 2)
+Question.create(word: "Un Zébra", word_image: "/zebra_icon.png", english_word: "Zebra", level_id: 2)
