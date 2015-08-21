@@ -64,7 +64,7 @@ a {
 
 .category-name {
   margin: auto;
-  margin-top: 15%; 
+  margin-top: 15%;
   display: block;
   width: 30%;
   padding-right: 10%;
@@ -82,36 +82,12 @@ a {
 
 .category .content {
   display: table-cell;
-  
+
   height: 150px;
   vertical-align: middle;
 
   width: 250px;
   text-align: center
-}
-
-#cat1 {
-  background-color: yellow;
-}
-
-#cat2 {
-  background-color: purple;
-}
-
-#cat3 {
-  background-color: lightblue;
-}
-
-#cat4 {
-  background-color: blue;
-}
-
-#cat5 {
-  background-color: lightgreen;
-}
-
-#cat6 {
-  background-color: red;
 }
 
 .title_div {
@@ -154,7 +130,6 @@ a {
 }
 
 .topics-bar {
-	background-color: #e53935;
 	height: 100%;
 	width: 35%;
 	position:absolute;
@@ -240,3 +215,4 @@ a {
   height: 200px;
   width: 200px;
 }
+

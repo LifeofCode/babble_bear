@@ -14,18 +14,24 @@ end
 
 get '/categories' do  
   @categories = Category.all
-  
+
   if session[:id]
     erb :categories
   else
     redirect '/'
   end
-end 
+end
 
 get '/categories/:id/topics' do
   @category = Category.find(params[:id])
   @topics = @category.topics.to_json
 end
+
+get '/categories/:id/topics/:topic_id' do
+  @category = Category.find(params[:id])
+  @topics = @category.topics
+end
+
 
 post '/session' do
   @user = User.find_by(email: params[:email])
@@ -34,7 +40,7 @@ post '/session' do
   if @user && @user.authenticate(params[:password])
     session[:id] = @user.id
     redirect '/categories'
-  else 
+  else
     erb :index
   end
 end
@@ -57,5 +63,3 @@ post '/signup' do
   end
 
 end
-
-
