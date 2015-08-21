@@ -1,8 +1,8 @@
 <h1> Topics </h1>
 
-<div class="categories twelve columns">  
+<div class="categories twelve columns">
   <% @topics.each do |topic| %>
-    <div id="cat<%= topic.id %>" class="category four columns">
+    <div id="top<%= topic.id %>" class="category four columns" data= "<%= topic.id %>" description= "<%= topic.description %>" color= "<%= topic.color %>">
       <h5 class="category-name"> <%= topic.name %> </h5>
     </div>
   <% end %>
