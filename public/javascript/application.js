@@ -1,10 +1,11 @@
-$(document).ready(function(){ 
+$(document).ready(function(){
 
   var handleCategoryClick = function(){
     var categoryId = $(this).attr("data");
     var categoryName = $(this).attr("name");
     var categoryDesc = $(this).attr("description");
     var color = $(this).attr("color");
+    console.log(categoryId)
 
     $.ajax({
       url: "/categories/" + categoryId + "/topics",
@@ -12,18 +13,48 @@ $(document).ready(function(){
       dataType: "json"
     }).done(function(topics){
       $("body").empty();
-      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p>'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"> </div> </div>')
+      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"> </div> </div>')
       $(topics).each(function(index, topic){
-        $(".levels-bar .border-formatting").append('<div class="level-div"><h4 class="level-heading" style="color:'+color+'"><br>'+topic.name+'</h4></div>')
+        $(".levels-bar .border-formatting").append('<div class="level-div"><br><h4 class="topics-heading"color="'+color+'" style="color:'+color+'" data="'+parseInt(topic.id)+'" name="'+topic.name+'" description="'+topic.description+'">'+topic.name+'</h4></div>')
       });
-      $(".level-heading").on("click", function(e){
-          handleTopicClick(categoryName)
+      $(".topics-heading").on("click", function(e){
+          handleTopicClick(categoryName, this)
       });
     });
   }
 
-  var handleTopicClick = function(categoryName){  
-    handleLevelClick();
+  var handleTopicClick = function(categoryName, self){
+    topicId = $(self).attr("data");
+    topicName = $(self).attr("name");
+    topicDesc = $(self).attr("description");
+    topicColor = $(self).attr("color");
+    $(".topics-bar").addClass("levels-added");
+    $(".levels-bar").addClass("questions-added");
+    $(".topic-heading").text(topicName);
+    $(".topic-description").text(topicDesc);
+    $(".level-div").addClass("remove-extra").addClass("remove-visual")
+    setTimeout(function(){
+      $(".level-div").addClass("remove-complete")
+    }, 1000);
+
+
+    var headings = document.getElementsByClassName("topics-heading")
+    for (var i=0; i < headings.length; i++)
+    {
+      $(headings[i]).text("Level " + (i+1));
+
+    }
+
+    $(".topics-heading").addClass("level-heading");
+    $(".level-heading").removeClass("topics-heading")
+
+
+    $(".level-heading").off("click").on("click", function(e){
+        console.log("clicked");
+        //CODE TO LINK TO GAME
+    });
+
+
   }
 
   var handleLevelClick = function(){
@@ -32,8 +63,8 @@ $(document).ready(function(){
                     "<div id='openModal' class='modalDialog'>" +
                     "</div>" +
                     "<div class='border-formatting'>" +
-                      "<div class='modal-image-bar modal-border-formatting'>"+ 
-                        "<img src='/dog_icon.png' class='modal-img'>" + 
+                      "<div class='modal-image-bar modal-border-formatting'>"+
+                        "<img src='/dog_icon.png' class='modal-img'>" +
                       "</div>" +
                       "<div class='modal-questions-bar'>" +
                         "<div class='level-div'><h3 class='level-heading'><br> Un Chien </h3></div>" +
@@ -44,7 +75,7 @@ $(document).ready(function(){
     $("body").append(gameView);
   }
 
-  //switch between login and sign up form  
+  //switch between login and sign up form
 
   $(".switch").click(function(){
     $(".login_form").toggleClass("hidden");
