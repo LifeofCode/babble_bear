@@ -22,7 +22,7 @@ get '/categories' do
   end
 end
 
-get '/categories/:id/topics' do
+get '/category/:id/topics' do
   @category = Category.find(params[:id])
   @topics = @category.topics.to_json
 end
@@ -62,4 +62,10 @@ post '/signup' do
     redirect '/'
   end
 
+end
+
+get '/level/:id' do
+  @level = Level.find(params[:id])
+  @questions = @level.questions
+  @questions.to_json
 end
