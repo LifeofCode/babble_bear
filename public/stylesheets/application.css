@@ -216,3 +216,6 @@ a {
   width: 200px;
 }
 
+button.check-answer {
+  border: 1px solid red;
+}

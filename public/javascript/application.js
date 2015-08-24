@@ -28,7 +28,6 @@ $(document).ready(function(){
 
   var handleLevelClick = function(){
     var gameView = "<a href='#openModal'>Open Modal</a>" + "<div id='openModal' class='modalDialog'><div>" +
-                    "<a href='#close' title='Close' class='close'>X</a>" +
                     "<div id='openModal' class='modalDialog'>" +
                     "</div>" +
                     "<div class='border-formatting'>" +
@@ -36,13 +35,26 @@ $(document).ready(function(){
                         "<img src='/dog_icon.png' class='modal-img'>" + 
                       "</div>" +
                       "<div class='modal-questions-bar'>" +
-                        "<div class='level-div'><h3 class='level-heading'><br> Un Chien </h3></div>" +
-                        "<div class='level-div'><h3 class='level-heading'><br> Un chat </h3></div>" +
-                        "<div class='level-div'> <h3 class='level-heading'><br> Une Souris </h3></div>" +
+                        "<a href='#close' title='Close' class='close'>X</a>" +
+                        "<form id='choose-word'>" + 
+                          "<h3 class='level-heading level-div'><input type='checkbox'> Un Chien </h3><br>" +
+                          "<h3 class='level-heading level-div'><input type='checkbox'> Un chat </h3><br>" +
+                          "<h3 class='level-heading level-div'><input type='checkbox'> Une Souris </h3><br>" +
+                          "<button type='submit class='check-answer'>Check Answer </button>" +
+                        "</form>" +
                       "</div>" +
                     "</div>"
-    $("body").append(gameView);
+    if ($("#openModal").length === 0){
+      $(".levels-bar").prepend(gameView);
+    }
   }
+
+  // var handleAnswerCheck = function(){
+  //   $.ajax({
+  //     url: "/"
+  //     method: "GET"
+  //   })
+  // }
 
   //switch between login and sign up form  
 
