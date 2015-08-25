@@ -57,7 +57,7 @@ post '/signup' do
 
   if @user.save
     session[:id] = @user.id
-    erb :categories
+    redirect '/categories'
   else
     redirect '/'
   end

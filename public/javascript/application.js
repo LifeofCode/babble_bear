@@ -54,7 +54,7 @@ $(document).ready(function(){
 
     $(".topics-heading").addClass("level-heading");
 
-    $(".level-heading").removeClass("topics-heading").wrap("<a href='#openModal'></a>");
+    $(".level-heading").removeClass("topics-heading");
 
     $(".toggleStudyTest").fadeIn();
 
@@ -122,6 +122,20 @@ $(document).ready(function(){
     return arrTwo;
   }
 
+  var openModal = function(gameView){
+
+    if($(".level-heading").hasClass("play")){  
+      $(".levels-bar").append(gameView);
+      $(".modalDialog").addClass("showModal");
+      $(".modalDialog .close").on("click", function(){
+        $(".modalDialog").remove();
+      });
+    
+    }else{
+      console.log("in else statement"); //append study view 
+    }
+  }
+
   var handleLevelClick = function(categoryId, topicId, level){
     var categoryId = categoryId;
     var topicId = topicId;
@@ -146,7 +160,7 @@ $(document).ready(function(){
 
       var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
 
-      var gameView = "<div id='openModal' class='modalDialog'>" +
+      var gameView = "<div class='modalDialog'>" +
                       "<div class='border-formatting'>" +
                         "<div class='modal-image-bar modal-border-formatting'>"+
                           "<img src='" + currentImage + "' class='modal-img'>" +
@@ -162,11 +176,8 @@ $(document).ready(function(){
                         "</div>" +
                       "</div>" +
                     "</div>"  
-    
-
-    
-
-      $(".levels-bar").append(gameView);
+      
+      openModal(gameView);
 
       $("#choose-word").off("submit").on("submit", function(e){
         e.preventDefault();
