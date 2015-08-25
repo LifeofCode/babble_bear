@@ -1,4 +1,5 @@
-$(document).ready(function(){ 
+$(document).ready(function(){
+
 
   var handleCategoryClick = function(){
     var categoryId = $(this).attr("data");
@@ -6,42 +7,187 @@ $(document).ready(function(){
     var categoryDesc = $(this).attr("description");
     var color = $(this).attr("color");
 
+
     $.ajax({
-      url: "/categories/" + categoryId + "/topics",
+      url: "/category/" + categoryId + "/topics",
       method: "GET",
       dataType: "json"
     }).done(function(topics){
       $("body").empty();
-      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p>'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"> </div> </div>')
+      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"><div class="mode-heading"><h2 style="color:'+color+'"> Select Topic </h2></div> </div> </div>');
       $(topics).each(function(index, topic){
-        $(".levels-bar .border-formatting").append('<div class="level-div"><h4 class="level-heading" style="color:'+color+'"><br>'+topic.name+'</h4></div>')
+        $(".levels-bar .border-formatting").append('<div class="level-div"><br><h4 class="topics-heading"color="'+color+'" style="color:'+color+'" data="'+parseInt(topic.id)+'" name="'+topic.name+'" description="'+topic.description+'">'+topic.name+'</h4></div>');
       });
-      $(".level-heading").on("click", function(e){
-          handleTopicClick(categoryName)
+      $(".topics-heading").on("click", function(e){
+        handleTopicClick(categoryId, this);
+      });
+    });
+  };
+
+  var handleTopicClick = function(categoryId, topic){
+    var categoryId = categoryId;
+    var topicId = $(topic).attr("data");
+    var topicName = $(topic).attr("name");
+    var topicDesc = $(topic).attr("description");
+    var topicColor = $(topic).attr("color");
+    
+    $(".topics-bar").addClass("levels-added");
+    $(".levels-bar").addClass("questions-added");
+    
+    $(".topic-heading").text(topicName);
+    $(".topic-description").text(topicDesc);
+
+    $(".level-div").addClass("remove-extra").addClass("remove-visual");
+    
+    setTimeout(function(){
+      $(".level-div").addClass("remove-complete");
+      $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
+      $(".onoffswitch").fadeIn();
+    }, 1000);
+
+
+    var headings = document.getElementsByClassName("topics-heading");
+
+    for (var i=0; i <= headings.length; i++){
+      $(headings[i]).text("Level " + (i+1));
+    }
+
+    $(".topics-heading").addClass("level-heading");
+
+    $(".level-heading").removeClass("topics-heading").wrap("<a href='#openModal'></a>");
+
+    $(".toggleStudyTest").fadeIn();
+
+    $(".level-heading").addClass("study");
+    $(".mode-heading").addClass("study");
+    $(".mode-heading h2").text("Study");
+
+    $("body").on("click", ".onoffswitch-inner", function(){
+      $(".level-heading").toggleClass("study")
+      $(".mode-heading").toggleClass("study");
+      $(".level-heading").toggleClass("play")
+      $(".mode-heading").toggleClass("play");
+
+      if($(".mode-heading").hasClass("study")){
+        $(".mode-heading h2").text("Study");
+      }else {
+        $(".mode-heading h2").text("Play");
+      }
+    });
+    
+    $(".level-heading").off("click").on("click", function(e){
+      handleLevelClick(categoryId, topicId, this);
+    });
+
+  }
+
+  var questionArr = function(levelWords, currentWord, questionCounter){
+    var arrOne = []; 
+    var randIndexOne = 0;
+    var randIndexTwo = 0;
+    var randWordOne = '';
+    var randWordTwo = ''; 
+    
+    randIndexOne = Math.floor(Math.random() * levelWords.length);
+
+    while(randIndexOne === questionCounter){
+      randIndexOne = Math.floor(Math.random() * levelWords.length);
+    }
+
+    randWordOne = levelWords[randIndexOne].word;
+    
+    randIndexTwo = Math.floor(Math.random() * levelWords.length);
+
+    while(randIndexTwo === questionCounter || randIndexOne === randIndexTwo){
+      randIndexTwo = Math.floor(Math.random() * levelWords.length);
+    }
+
+    randWordTwo = levelWords[randIndexTwo].word;
+    
+    arrOne.push(currentWord, randWordOne, randWordTwo);
+        
+    return arrOne
+  }
+
+  var randomizeQuestion = function(arrOne){
+    var arrTwo = [];
+  
+    for (var i=0; i < 3; i++){
+      var randomIndex = Math.floor(Math.random() * 3);    
+      while(arrTwo[randomIndex]){
+        randomIndex = Math.floor(Math.random() * 3);
+      } 
+      arrTwo[randomIndex] = arrOne[i];
+    }
+    return arrTwo;
+  }
+
+  var handleLevelClick = function(categoryId, topicId, level){
+    var categoryId = categoryId;
+    var topicId = topicId;
+    var levelId = $(level).attr("data");
+    var levelWords = [];
+    
+    var questionCounter = 0;
+    var currentImage = ''; 
+    var currentWord = '' ;
+    
+    $.ajax({
+      url: "/level/" + levelId,
+      method: "GET",
+      dataType: "json"
+    }).done(function(questions){
+      $.each(questions, function(i, question){
+        levelWords.push({word: question.word, word_image: question.word_image});
+      });
+      
+      currentImage = levelWords[questionCounter].word_image;
+      currentWord = levelWords[questionCounter].word;
+
+      var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
+
+      var gameView = "<div id='openModal' class='modalDialog'>" +
+                      "<div class='border-formatting'>" +
+                        "<div class='modal-image-bar modal-border-formatting'>"+
+                          "<img src='" + currentImage + "' class='modal-img'>" +
+                        "</div>" +
+                        "<div class='modal-questions-bar'>" +
+                          "<a href='#close' title='Close' class='close'>X</a>" +
+                          "<form id='choose-word'>" + 
+                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
+                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
+                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
+                            "<button type='submit class='check-answer'>Check Answer </button>" +
+                          "</form>" +
+                        "</div>" +
+                      "</div>" +
+                    "</div>"  
+    
+
+    
+
+      $(".levels-bar").append(gameView);
+
+      $("#choose-word").off("submit").on("submit", function(e){
+        e.preventDefault();
+        var checkedBox = $('input[type=radio]:checked', '#choose-word');
+        var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
+        console.log(checkedBox)
+        handleAnswerCheck(levelWords, currentImage, userAnswer);
       });
     });
   }
 
-  var handleTopicClick = function(categoryName){  
-    handleLevelClick();
-  }
-
-  var handleLevelClick = function(){
-    var gameView = "<a href='#openModal'>Open Modal</a>" + "<div id='openModal' class='modalDialog'><div>" +
-                    "<a href='#close' title='Close' class='close'>X</a>" +
-                    "<div id='openModal' class='modalDialog'>" +
-                    "</div>" +
-                    "<div class='border-formatting'>" +
-                      "<div class='modal-image-bar modal-border-formatting'>"+ 
-                        "<img src='/dog_icon.png' class='modal-img'>" + 
-                      "</div>" +
-                      "<div class='modal-questions-bar'>" +
-                        "<div class='level-div'><h3 class='level-heading'><br> Un Chien </h3></div>" +
-                        "<div class='level-div'><h3 class='level-heading'><br> Un chat </h3></div>" +
-                        "<div class='level-div'> <h3 class='level-heading'><br> Une Souris </h3></div>" +
-                      "</div>" +
-                    "</div>"
-    $("body").append(gameView);
+  var handleAnswerCheck = function(levelWords, currentImage, userAnswer){  
+    $.each(levelWords, function(i, levelWord){
+      if (levelWord.word_image === currentImage){
+        if(userAnswer === levelWord.word){
+          console.log("correct!");
+        }else {
+          console.log("wrong!");
+        }
+      }
+    });        
   }
 
   //switch between login and sign up form  
@@ -49,12 +195,13 @@ $(document).ready(function(){
   $(".switch").click(function(){
     $(".login_form").toggleClass("hidden");
     $(".signup_form").toggleClass("hidden");
-  })
+  });
 
   $(".category").on("click", handleCategoryClick);
 
 
 });
+
 
 // var showView = function(view){
 //   document.body.empty;
