@@ -1,10 +1,13 @@
 $(document).ready(function(){
 
+
   var handleCategoryClick = function(){
+    console.log("aaaaa")
     var categoryId = $(this).attr("data");
     var categoryName = $(this).attr("name");
     var categoryDesc = $(this).attr("description");
     var color = $(this).attr("color");
+
 
     $.ajax({
       url: "/category/" + categoryId + "/topics",
@@ -12,15 +15,15 @@ $(document).ready(function(){
       dataType: "json"
     }).done(function(topics){
       $("body").empty();
-      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"> </div> </div>')
+      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"><div class="mode-heading"><h2 style="color:'+color+'"> Select Topic </h2></div> </div> </div>');
       $(topics).each(function(index, topic){
-        $(".levels-bar .border-formatting").append('<div class="level-div"><br><h4 class="topics-heading"color="'+color+'" style="color:'+color+'" data="'+parseInt(topic.id)+'" name="'+topic.name+'" description="'+topic.description+'">'+topic.name+'</h4></div>')
+        $(".levels-bar .border-formatting").append('<div class="level-div"><br><h4 class="topics-heading"color="'+color+'" style="color:'+color+'" data="'+parseInt(topic.id)+'" name="'+topic.name+'" description="'+topic.description+'">'+topic.name+'</h4></div>');
       });
       $(".topics-heading").on("click", function(e){
         handleTopicClick(categoryId, this);
       });
     });
-  }
+  };
 
   var handleTopicClick = function(categoryId, topic){
     var categoryId = categoryId;
@@ -34,20 +37,23 @@ $(document).ready(function(){
     
     $(".topic-heading").text(topicName);
     $(".topic-description").text(topicDesc);
-    
+
     $(".level-div").addClass("remove-extra").addClass("remove-visual");
     
     setTimeout(function(){
       $(".level-div").addClass("remove-complete");
+      $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
+      $(".onoffswitch").fadeIn();
     }, 1000);
 
+
     var headings = document.getElementsByClassName("topics-heading");
-    
-    for (var i=0; i < headings.length; i++){
+    for (var i=0; i <= headings.length; i++){
       $(headings[i]).text("Level " + (i+1));
     }
 
     $(".topics-heading").addClass("level-heading");
+
     $(".level-heading").removeClass("topics-heading").wrap("<a href='#openModal'></a>");
     
     $(".level-heading").off("click").on("click", function(e){
@@ -136,14 +142,35 @@ $(document).ready(function(){
                           "</form>" +
                         "</div>" +
                       "</div>" +
-                    "</div>" 
+                    "</div>"  
+    $(".level-heading").removeClass("topics-heading");
+
+    $(".toggleStudyTest").fadeIn();
+
+    $(".level-heading").addClass("study");
+    $(".mode-heading").addClass("study");
+    $(".mode-heading h2").text("Study");
+
+    $("body").on("click", ".onoffswitch-inner", function(){
+      $(".level-heading").toggleClass("study")
+      $(".mode-heading").toggleClass("study");
+      $(".level-heading").toggleClass("play")
+      $(".mode-heading").toggleClass("play");
+
+      if($(".mode-heading").hasClass("study")){
+        $(".mode-heading h2").text("Study");
+      }else {
+        $(".mode-heading h2").text("Play");
+      }
+    });
+
       $(".levels-bar").append(gameView);
 
       $("#choose-word").off("submit").on("submit", function(e){
         e.preventDefault();
         var checkedBox = $('input[type=radio]:checked', '#choose-word');
         var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
-            
+        handleAnswerCheck(levelWords, currentImage, userAnswer);
       });
     });
   }
@@ -165,12 +192,13 @@ $(document).ready(function(){
   $(".switch").click(function(){
     $(".login_form").toggleClass("hidden");
     $(".signup_form").toggleClass("hidden");
-  })
+  });
 
   $(".category").on("click", handleCategoryClick);
 
 
 });
+
 
 // var showView = function(view){
 //   document.body.empty;
