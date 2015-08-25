@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+  var flag = false;
 
   var handleCategoryClick = function(){
     var categoryId = $(this).attr("data");
@@ -76,6 +77,7 @@ $(document).ready(function(){
     });
     
     $(".level-heading").off("click").on("click", function(e){
+
       handleLevelClick(categoryId, topicId, this);
     });
 
@@ -126,17 +128,28 @@ $(document).ready(function(){
 
     if($(".level-heading").hasClass("play")){  
       $(".levels-bar").append(gameView);
-      $(".modalDialog").addClass("showModal");
+      
+      setTimeout(function(){
+        $(".modalDialog").addClass("showModal");
+      },1); 
+      
       $(".modalDialog .close").on("click", function(){
         $(".modalDialog").remove();
       });
-    
+
+      flag = false
     }else{
       console.log("in else statement"); //append study view 
     }
   }
 
   var handleLevelClick = function(categoryId, topicId, level){
+    if (flag){
+      return false;
+    }
+
+    flag = true;
+
     var categoryId = categoryId;
     var topicId = topicId;
     var levelId = $(level).attr("data");

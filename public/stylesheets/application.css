@@ -204,9 +204,9 @@ a:link {
   background: rgba(0,0,0,0.8);
   z-index: 99999;
   opacity:0;
-  -webkit-transition: 400ms;
-  -moz-transition: 400ms;
-  transition: 400ms;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
 }
 
 .modalDialog.showModal {
