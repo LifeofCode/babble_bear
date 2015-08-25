@@ -56,14 +56,61 @@ $(document).ready(function(){
 
   }
 
+  var questionArr = function(levelWords, currentWord, questionCounter){
+    var arrOne = []; 
+    var randIndexOne = 0;
+    var randIndexTwo = 0;
+    var randWordOne = '';
+    var randWordTwo = ''; 
+    
+    randIndexOne = Math.floor(Math.random() * levelWords.length);
+    console.log("randIndexOne before first loop", randIndexOne);
+
+    while(randIndexOne === questionCounter){
+      randIndexOne = Math.floor(Math.random() * levelWords.length);
+    }
+
+    randWordOne = levelWords[randIndexOne].word;
+    
+    randIndexTwo = Math.floor(Math.random() * levelWords.length);
+    console.log("randIndextwo before loop", randIndexTwo);
+
+    while(randIndexTwo === questionCounter || randIndexOne === randIndexTwo){
+      randIndexTwo = Math.floor(Math.random() * levelWords.length);
+    }
+
+    randWordTwo = levelWords[randIndexTwo].word;
+    
+    arrOne.push(currentWord, randWordOne, randWordTwo);
+        
+        console.log("arr One:", arrOne);
+    
+    return arrOne
+  }
+
+  var randomizeQuestion = function(arrOne){
+    var arrTwo = [];
+  
+    for (var i=0; i < 3; i++){
+      var randomIndex = Math.floor(Math.random() * 3);    
+      while(arrTwo[randomIndex]){
+        randomIndex = Math.floor(Math.random() * 3);
+      } 
+      arrTwo[randomIndex] = arrOne[i];
+    }
+    return arrTwo;
+  }
+
   var handleLevelClick = function(categoryId, topicId, level){
     var categoryId = categoryId;
     var topicId = topicId;
     var levelId = $(level).attr("data");
-    var arrOne = [];
-    var arrTwo = [];
-    var levelFrenchWords = [];
+    var levelWords = [];
+    
     var questionCounter = 0;
+    var currentImage = ''; 
+    var currentWord = '' ;
+    
 
     $.ajax({
       url: "/level/" + levelId,
@@ -72,22 +119,13 @@ $(document).ready(function(){
     }).done(function(questions){
       //generate questions using arrays? 
       $.each(questions, function(i, question){
-        levelFrenchWords.push({word: question.word, word_image: question.word_image});
+        levelWords.push({word: question.word, word_image: question.word_image});
       });
       
-      var currentImage = levelFrenchWords[questionCounter].word_image;
-      var currentWord = levelFrenchWords[questionCounter].word;
-      var arr = []
-      // while(arr.length < 2){
-      var randOne = levelFrenchWords[Math.floor(Math.random() * levelFrenchWords.length)].word;
-      //   var found=false;
-      //   for(var i=0;i<arr.length;i++){
-      //     if(arr[i]==randomnumber){found=true;break}
-      //   }
-        
-      //   if(!found)arr[arr.length]=randomnumber;
-      // } 
-      var randTwo = levelFrenchWords[Math.floor(Math.random() * levelFrenchWords.length)].word;
+      currentImage = levelWords[questionCounter].word_image;
+      currentWord = levelWords[questionCounter].word;
+
+      var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
 
       var gameView = "<div id='openModal' class='modalDialog'>" +
                       "<div class='border-formatting'>" +
