@@ -49,25 +49,35 @@ $(document).ready(function(){
 
     $(".topics-heading").addClass("level-heading");
     $(".level-heading").removeClass("topics-heading");
-    $(".mode-heading").toggleClass("study");
 
     $(".toggleStudyTest").fadeIn();
 
     $(".level-heading").addClass("study");
     $(".mode-heading").addClass("study");
+    $(".mode-heading h2").text("Study");
 
-    // $(.onoffswitch).click()
+    $("body").on("click", ".onoffswitch-inner", function(){
+      $(".level-heading").toggleClass("study")
+      $(".mode-heading").toggleClass("study");
+      $(".level-heading").toggleClass("play")
+      $(".mode-heading").toggleClass("play");
 
-    $("body").on("click", function(e){
-      console.log(e);
+      if($(".mode-heading").hasClass("study")){
+        $(".mode-heading h2").text("Study");
+      }
+      else {
+        $(".mode-heading h2").text("Play");
+      }
+
     });
-
 
 
     $(".level-heading").off("click").on("click", function(e){
         console.log("clicked");
+
         //CODE TO LINK TO GAME
     });
+
   }
 
   var handleLevelClick = function(){
@@ -82,7 +92,7 @@ $(document).ready(function(){
                       "<div class='modal-questions-bar'>" +
                         "<div class='level-div'><h3 class='level-heading'><br> Un Chien </h3></div>" +
                         "<div class='level-div'><h3 class='level-heading'><br> Un chat </h3></div>" +
-                        "<div class='level-div'> <h3 class='level-heading'><br> Une Souris </h3></div>" +
+                        "<div class='level-div'><h3 class='level-heading'><br> Une Souris </h3></div>" +
                       "</div>" +
                     "</div>"
     $("body").append(gameView);
