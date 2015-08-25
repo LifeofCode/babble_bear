@@ -64,7 +64,6 @@ $(document).ready(function(){
     var randWordTwo = ''; 
     
     randIndexOne = Math.floor(Math.random() * levelWords.length);
-    console.log("randIndexOne before first loop", randIndexOne);
 
     while(randIndexOne === questionCounter){
       randIndexOne = Math.floor(Math.random() * levelWords.length);
@@ -73,7 +72,6 @@ $(document).ready(function(){
     randWordOne = levelWords[randIndexOne].word;
     
     randIndexTwo = Math.floor(Math.random() * levelWords.length);
-    console.log("randIndextwo before loop", randIndexTwo);
 
     while(randIndexTwo === questionCounter || randIndexOne === randIndexTwo){
       randIndexTwo = Math.floor(Math.random() * levelWords.length);
@@ -83,8 +81,6 @@ $(document).ready(function(){
     
     arrOne.push(currentWord, randWordOne, randWordTwo);
         
-        console.log("arr One:", arrOne);
-    
     return arrOne
   }
 
@@ -117,7 +113,6 @@ $(document).ready(function(){
       method: "GET",
       dataType: "json"
     }).done(function(questions){
-      //generate questions using arrays? 
       $.each(questions, function(i, question){
         levelWords.push({word: question.word, word_image: question.word_image});
       });
@@ -145,37 +140,26 @@ $(document).ready(function(){
                     "</div>" 
       $(".levels-bar").append(gameView);
 
-      $("#choose-word").on("submit", function(e){
+      $("#choose-word").off("submit").on("submit", function(e){
         e.preventDefault();
         
-        var checkedBox = $('input[type=radio]:checked', '#choose-word')
         var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
             
-        handleAnswerCheck(levelId, userAnswer, checkedBox);
+        handleAnswerCheck(levelWords, currentImage, userAnswer);
       });
     });
-
   }
 
-  var handleAnswerCheck = function(levelId, userAnswer, checkedBox){
-      // $.ajax({
-      //   url: "/level/" + levelId,
-      //   method: "GET",
-      //   dataType: "json"
-      // }).done(function(questions){
-      //   $.each(questions, function(i, question){
-      //     if (question.word_image === '/dog_icon.png'){
-      //       if(userAnswer === question.word){
-      //         // make box green? show green checkmark? $(checkedBox).css('border', 'green')
-      //         console.log("correct!");
-      //       }else {
-      //         console.log("wrong!");
-      //       }
-      //       //check input text against question.word.downcase();
-      //     }
-      //   });
-      // });
-    
+  var handleAnswerCheck = function(levelWords, currentImage, userAnswer){  
+    $.each(levelWords, function(i, levelWord){
+      if (levelWord.word_image === currentImage){
+        if(userAnswer === levelWord.word){
+          console.log("correct!");
+        }else {
+          console.log("wrong!");
+        }
+      }
+    });        
   }
 
   //switch between login and sign up form  
