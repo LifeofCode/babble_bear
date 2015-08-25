@@ -2,7 +2,6 @@ $(document).ready(function(){
 
 
   var handleCategoryClick = function(){
-    console.log("aaaaa")
     var categoryId = $(this).attr("data");
     var categoryName = $(this).attr("name");
     var categoryDesc = $(this).attr("description");
@@ -48,6 +47,7 @@ $(document).ready(function(){
 
 
     var headings = document.getElementsByClassName("topics-heading");
+
     for (var i=0; i <= headings.length; i++){
       $(headings[i]).text("Level " + (i+1));
     }
@@ -55,6 +55,25 @@ $(document).ready(function(){
     $(".topics-heading").addClass("level-heading");
 
     $(".level-heading").removeClass("topics-heading").wrap("<a href='#openModal'></a>");
+
+    $(".toggleStudyTest").fadeIn();
+
+    $(".level-heading").addClass("study");
+    $(".mode-heading").addClass("study");
+    $(".mode-heading h2").text("Study");
+
+    $("body").on("click", ".onoffswitch-inner", function(){
+      $(".level-heading").toggleClass("study")
+      $(".mode-heading").toggleClass("study");
+      $(".level-heading").toggleClass("play")
+      $(".mode-heading").toggleClass("play");
+
+      if($(".mode-heading").hasClass("study")){
+        $(".mode-heading h2").text("Study");
+      }else {
+        $(".mode-heading h2").text("Play");
+      }
+    });
     
     $(".level-heading").off("click").on("click", function(e){
       handleLevelClick(categoryId, topicId, this);
@@ -143,26 +162,9 @@ $(document).ready(function(){
                         "</div>" +
                       "</div>" +
                     "</div>"  
-    $(".level-heading").removeClass("topics-heading");
+    
 
-    $(".toggleStudyTest").fadeIn();
-
-    $(".level-heading").addClass("study");
-    $(".mode-heading").addClass("study");
-    $(".mode-heading h2").text("Study");
-
-    $("body").on("click", ".onoffswitch-inner", function(){
-      $(".level-heading").toggleClass("study")
-      $(".mode-heading").toggleClass("study");
-      $(".level-heading").toggleClass("play")
-      $(".mode-heading").toggleClass("play");
-
-      if($(".mode-heading").hasClass("study")){
-        $(".mode-heading h2").text("Study");
-      }else {
-        $(".mode-heading h2").text("Play");
-      }
-    });
+    
 
       $(".levels-bar").append(gameView);
 
@@ -170,6 +172,7 @@ $(document).ready(function(){
         e.preventDefault();
         var checkedBox = $('input[type=radio]:checked', '#choose-word');
         var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
+        console.log(checkedBox)
         handleAnswerCheck(levelWords, currentImage, userAnswer);
       });
     });
