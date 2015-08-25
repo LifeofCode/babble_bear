@@ -107,7 +107,6 @@ $(document).ready(function(){
     var currentImage = ''; 
     var currentWord = '' ;
     
-
     $.ajax({
       url: "/level/" + levelId,
       method: "GET",
@@ -142,10 +141,9 @@ $(document).ready(function(){
 
       $("#choose-word").off("submit").on("submit", function(e){
         e.preventDefault();
-        
+        var checkedBox = $('input[type=radio]:checked', '#choose-word');
         var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
             
-        handleAnswerCheck(levelWords, currentImage, userAnswer);
       });
     });
   }
