@@ -133,9 +133,9 @@ $(document).ready(function(){
         $(".modalDialog").remove();
       });
 
-      if($(".level-heading").hasClass("study")){
+      if($(this).hasClass("modal-congrats-content")){
         setTimeout(function(){
-          $(".modal-congrats-content").append("<button type='button' class='previous-question'>Previous Question</button>")
+          $(".modal-congrats-content").append("<button type='button' class='previous-question'>Go Back</button>")
         }, 0);
       }
 
@@ -288,6 +288,7 @@ $(document).ready(function(){
 
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
+      
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     } else {
@@ -301,6 +302,7 @@ $(document).ready(function(){
 
     if (questionCounter > 0){
       questionCounter -= 1;
+      $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     }else{
       openModal(gameConclusion);
