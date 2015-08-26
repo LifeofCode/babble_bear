@@ -122,10 +122,8 @@ $(document).ready(function(){
     return arrTwo;
   }
 
-  var openModal = function(gameView, studyView){
-
-    if($(".level-heading").hasClass("play")){
-      $(".levels-bar").append(gameView);
+  var openModal = function(view){
+      $(".levels-bar").append(view);
 
       setTimeout(function(){
         $(".modalDialog").addClass("showModal");
@@ -136,21 +134,6 @@ $(document).ready(function(){
       });
 
       flag = false;
-    }else{
-
-      $(".levels-bar").append(studyView);
-
-      setTimeout(function(){
-        $(".modalDialog").addClass("showModal");
-      },1);
-
-      $(".modalDialog .close").off("click").on("click", function(){
-        $(".modalDialog").remove();
-      });
-
-      flag = false;
-
-    }
   }
 
   var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord){
@@ -185,21 +168,18 @@ $(document).ready(function(){
                             "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br></br></br>" +
                             "<h3><small> French: </small></h3>" +
                             "<h3 class='english_word level-div nohover' value='" + currentWord + "'>" + currentWord + "</h3><br>" +
-                            // "<button type='submit class='check-answer'>Check Answer </button>" +
-                            "<button type='button' class='next-question show-button'>Next Question</button>" +
+                            "<button type='button' class='next-question'>Next Question</button>" +
                             "<button type='button' class='previous-question'>Previous Question</button>" +
                         "</div>" +
                       "</div>" +
                     "</div>"
 
-
-      openModal(gameView, studyView);
+    if($(".level-heading").hasClass("play")){
+      openModal(gameView);
+    }else{
+      openModal(studyView);
+    }
   }
-
-  // var concludeGame = function(){
-
-  // }
-
 
   var executeGame = function(levelWords, questionCounter){
     currentWord = levelWords[questionCounter].word;
@@ -212,10 +192,27 @@ $(document).ready(function(){
       var userAnswer = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word').val();
 
       handleAnswerCheck(levelWords, currentImage, userAnswer);
-      $(".next-question").addClass("show-button");
-    });
 
+      if (questionCounter < levelWords.length - 1){
+        $(".next-question").addClass("show-button");
+      }else{
+        $(".next-question").text("Done").addClass("show-button");
+      }
+
+    });
+    
     displayQuestion(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord);
+    
+    if($(".level-heading").hasClass("study")){  
+      setTimeout(function(){
+        // display next question button until last question in study mode, then change text to done and display
+        if (questionCounter < levelWords.length - 1){
+          $(".next-question").addClass("show-button");
+        }else{
+          $(".next-question").text("Done").addClass("show-button");
+        }
+      },0);
+    }
   }
 
   var handleLevelClick = function(categoryId, topicId, level){
@@ -252,8 +249,6 @@ $(document).ready(function(){
   var handleAnswerCheck = function(levelWords, currentImage, userAnswer){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
-        console.log("currentImage", currentImage)
-        console.log("levelWord.word, userAnswer", levelWord.word, userAnswer)
         if(userAnswer === levelWord.word){
           console.log("correct!");
         }else {
@@ -263,17 +258,34 @@ $(document).ready(function(){
     });
   }
 
+  var gameConclusion = "<div class='modalDialog'>" +
+                      "<div class='border-formatting'>" +
+                        "<div class='modal-image-bar modal-border-formatting'>"+
+                            "<h3 class='modal-congrats-heading'>Congratulations!</h3>" +
+                        "</div>" +
+                        "<div class='modal-questions-bar'>" +
+                          "<a href='#close' title='Close' class='close'>X</a>" +
+                          "<div class='modal-congrats-content'>" +
+                            "<h3> <small> You've reached the end! </small></h3>" +
+                            "<button type='button' class='back-to-levels'>Back to Levels</button>" +
+                            "<button type='button' class='previous-question'>Previous Question</button>" +
+                          "</div>" +
+                        "</div>" +
+                      "</div>" +
+                    "</div>"
+
   $("body").on("click", ".show-button", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
 
-
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
+      
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
-    }else{
-      console.log("else")
+    } else {
+      openModal(gameConclusion);
+      
     }
   });
 
@@ -283,12 +295,10 @@ $(document).ready(function(){
 
     if (questionCounter > 0){
       questionCounter -= 1;
-      $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     }else{
-      console.log("else")
+      openModal(gameConclusion);
     }
-    //executeGame(levelWords, questionCounter);
   });
 
 

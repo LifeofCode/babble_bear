@@ -333,3 +333,13 @@ button.previous-question {
   border: 1px solid red;
   margin-left: 30px;
 }
+
+.modal-congrats-heading {
+  text-align: center;
+  margin-top: 50%;
+}
+
+.modal-congrats-content {
+  text-align: center;
+  margin-top: 15%;
+}
