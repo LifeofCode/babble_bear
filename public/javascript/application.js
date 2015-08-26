@@ -301,6 +301,9 @@ $(document).ready(function(){
     }
   });
 
+  $("body").on("click", ".back-to-levels", function(){
+    $(".modalDialog").remove();
+  });
 
   //switch between login and sign up form
 
