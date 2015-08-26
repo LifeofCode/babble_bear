@@ -13,9 +13,9 @@ Topic.create(name: "Clothing", category_id: @c1.id)
 Topic.create(name: "Weather", category_id: @c1.id)
 
 Topic.create(name: "Etre", category_id: @c2.id)
-Topic.create(name: "Avoir", category_id: @c2.id)  
-Topic.create(name: "Aller", category_id: @c2.id)  
-Topic.create(name: "Faire", category_id: @c2.id)  
+Topic.create(name: "Avoir", category_id: @c2.id)
+Topic.create(name: "Aller", category_id: @c2.id)
+Topic.create(name: "Faire", category_id: @c2.id)
 
 Level.create(number: 1, topic_id: 1)
 Level.create(number: 2, topic_id: 1)
@@ -37,3 +37,7 @@ Question.create(word: "Un Serpent", word_image: "/snake_icon.png", english_word:
 Question.create(word: "Une Tortue", word_image: "/turtle_icon.png", english_word: "Turtle", level_id: 2)
 Question.create(word: "Un Zébra", word_image: "/zebra_icon.png", english_word: "Zebra", level_id: 2)
 
+Question.create(word: "Un Poulet", word_image: "/chicken_icon.png", english_word: "Chicken", level_id: 3)
+Question.create(word: "Un Mouton", word_image: "/sheep_icon.png", english_word: "Sheep", level_id: 3)
+Question.create(word: "Un Cheval", word_image: "/horse_icon.png", english_word: "Horse", level_id: 3)
+Question.create(word: "Une Baleine", word_image: "/whale_icon.png", english_word: "Whale", level_id: 3)

@@ -12,7 +12,7 @@ get '/levels' do
   erb :levels_view
 end
 
-get '/categories' do  
+get '/categories' do
   @categories = Category.all
 
   if session[:id]
