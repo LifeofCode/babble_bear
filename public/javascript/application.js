@@ -150,7 +150,7 @@ $(document).ready(function(){
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
-                          "<button type='submit class='check-answer'>Check Answer </button>" +
+                          "<button type='submit' class='check-answer'>Check Answer </button>" +
                           "<button type='button' class='next-question'>Next Question</button>" +
                         "</form>" +
                       "</div>" +
@@ -250,8 +250,10 @@ $(document).ready(function(){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
+          $(".check-answer").text("^.^").addClass("right-answer");
           console.log("correct!");
         }else {
+          $(".check-answer").addClass("wrong-answer");
           console.log("wrong!");
         }
       }

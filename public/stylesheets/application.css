@@ -248,11 +248,6 @@ a:link {
   width: 200px;
 }
 
-
-button.check-answer {
-  border: 1px solid red;
-}
-
 form.choose-word {
   height: 500px;
 }
@@ -334,7 +329,30 @@ button.previous-question {
   margin-left: 30px;
 }
 
+
+button.check-answer {
+  text-align: center;
+  border: 1px solid red;
+  height: 50px;
+  width: 160px;
+  overflow: hidden
+  transition: all 0.3s ease-in 0s;
+}
+
 .modal-congrats-content {
   text-align: center;
   margin-top: 15%;
+}
+
+.check-answer.right-answer {
+  text-align: center;
+  border: 1px solid darkgreen;
+  background-color: green;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 50%;
+}
+
+.wrong-answer {
+
 }
