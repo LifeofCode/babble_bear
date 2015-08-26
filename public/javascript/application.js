@@ -133,12 +133,10 @@ $(document).ready(function(){
         $(".modalDialog").remove();
       });
 
-      if($(this).hasClass("modal-congrats-content")){
-        setTimeout(function(){
-          $(".modal-congrats-content").append("<button type='button' class='previous-question'>Go Back</button>")
-        }, 0);
+      if($(".level-heading").hasClass("study")){
+        $(".modal-congrats-content").append("<button type='button' class='previous-question'>Go Back</button>")
       }
-
+     
       flag = false;
   }
 
