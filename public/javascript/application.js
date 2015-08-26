@@ -31,15 +31,15 @@ $(document).ready(function(){
     var topicName = $(topic).attr("name");
     var topicDesc = $(topic).attr("description");
     var topicColor = $(topic).attr("color");
-    
+
     $(".topics-bar").addClass("levels-added");
     $(".levels-bar").addClass("questions-added");
-    
+
     $(".topic-heading").text(topicName);
     $(".topic-description").text(topicDesc);
 
     $(".level-div").addClass("remove-extra").addClass("remove-visual");
-    
+
     setTimeout(function(){
       $(".level-div").addClass("remove-complete");
       $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
@@ -75,7 +75,7 @@ $(document).ready(function(){
         $(".mode-heading h2").text("Play");
       }
     });
-    
+
     $(".level-heading").off("click").on("click", function(e){
 
       handleLevelClick(categoryId, topicId, this);
@@ -84,12 +84,12 @@ $(document).ready(function(){
   }
 
   var questionArr = function(levelWords, currentWord, questionCounter){
-    var arrOne = []; 
+    var arrOne = [];
     var randIndexOne = 0;
     var randIndexTwo = 0;
     var randWordOne = '';
-    var randWordTwo = ''; 
-    
+    var randWordTwo = '';
+
     randIndexOne = Math.floor(Math.random() * levelWords.length);
 
     while(randIndexOne === questionCounter){
@@ -97,7 +97,7 @@ $(document).ready(function(){
     }
 
     randWordOne = levelWords[randIndexOne].word;
-    
+
     randIndexTwo = Math.floor(Math.random() * levelWords.length);
 
     while(randIndexTwo === questionCounter || randIndexOne === randIndexTwo){
@@ -105,45 +105,58 @@ $(document).ready(function(){
     }
 
     randWordTwo = levelWords[randIndexTwo].word;
-    
+
     arrOne.push(currentWord, randWordOne, randWordTwo);
-        
+
     return arrOne
   }
 
   var randomizeQuestion = function(arrOne){
     var arrTwo = [];
-  
+
     for (var i=0; i < 3; i++){
-      var randomIndex = Math.floor(Math.random() * 3);    
+      var randomIndex = Math.floor(Math.random() * 3);
       while(arrTwo[randomIndex]){
         randomIndex = Math.floor(Math.random() * 3);
-      } 
+      }
       arrTwo[randomIndex] = arrOne[i];
     }
     return arrTwo;
   }
 
-  var openModal = function(gameView){
+  var openModal = function(gameView, studyView){
 
-    if($(".level-heading").hasClass("play")){  
+    if($(".level-heading").hasClass("play")){
       $(".levels-bar").append(gameView);
-      
+
       setTimeout(function(){
         $(".modalDialog").addClass("showModal");
-      },1); 
-      
+      },0);
+
       $(".modalDialog .close").on("click", function(){
         $(".modalDialog").remove();
       });
 
-      flag = false
+      flag = false;
     }else{
-      console.log("in else statement"); //append study view 
+      $(".levels-bar").append(studyView);
+
+      setTimeout(function(){
+        $(".modalDialog").addClass("showModal");
+      },1);
+
+      $(".modalDialog .close").on("click", function(){
+        $(".modalDialog").remove();
+      });
+
+      flag = false;
+
+      console.log("in else statement"); //append study view
     }
   }
 
   var handleLevelClick = function(categoryId, topicId, level){
+    debugger
     if (flag){
       return false;
     }
@@ -154,22 +167,23 @@ $(document).ready(function(){
     var topicId = topicId;
     var levelId = $(level).attr("data");
     var levelWords = [];
-    
+
     var questionCounter = 0;
-    var currentImage = ''; 
+    var currentImage = '';
     var currentWord = '' ;
-    
+
     $.ajax({
       url: "/level/" + levelId,
       method: "GET",
       dataType: "json"
     }).done(function(questions){
       $.each(questions, function(i, question){
-        levelWords.push({word: question.word, word_image: question.word_image});
+        levelWords.push({word: question.word, word_image: question.word_image, english_word: question.english_word});
       });
-      
+
       currentImage = levelWords[questionCounter].word_image;
       currentWord = levelWords[questionCounter].word;
+      currentEnglishWord = levelWords[questionCounter].english_word;
 
       var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
 
@@ -180,7 +194,7 @@ $(document).ready(function(){
                         "</div>" +
                         "<div class='modal-questions-bar'>" +
                           "<a href='#close' title='Close' class='close'>X</a>" +
-                          "<form id='choose-word'>" + 
+                          "<form id='choose-word'>" +
                             "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
                             "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
                             "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
@@ -188,9 +202,29 @@ $(document).ready(function(){
                           "</form>" +
                         "</div>" +
                       "</div>" +
-                    "</div>"  
-      
-      openModal(gameView);
+                    "</div>"
+                    //
+                    //
+                    //
+      var studyView ="<div class='modalDialog'>" +
+                        "<div class='border-formatting'>" +
+                          "<div class='modal-image-bar modal-border-formatting'>"+
+                            "<img src='" + currentImage + "' class='modal-img'>" +
+                          "</div>" +
+                          "<div class='modal-questions-bar'>" +
+                            "<a href='#close' title='Close' class='close'>X</a>" +
+                              "<h3><small> English: </small></h3>" +
+                              "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br></br></br>" +
+                              "<h3><small> French: </small></h3>" +
+                              "<h3 class='english_word level-div nohover' value='" + currentWord + "'>" + currentWord + "</h3><br>" +
+                              // "<button type='submit class='check-answer'>Check Answer </button>" +
+                            "</form>" +
+                          "</div>" +
+                        "</div>" +
+                      "</div>"
+
+
+      openModal(gameView,studyView);
 
       $("#choose-word").off("submit").on("submit", function(e){
         e.preventDefault();
@@ -202,7 +236,7 @@ $(document).ready(function(){
     });
   }
 
-  var handleAnswerCheck = function(levelWords, currentImage, userAnswer){  
+  var handleAnswerCheck = function(levelWords, currentImage, userAnswer){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
@@ -211,10 +245,10 @@ $(document).ready(function(){
           console.log("wrong!");
         }
       }
-    });        
+    });
   }
 
-  //switch between login and sign up form  
+  //switch between login and sign up form
 
   $(".switch").click(function(){
     $(".login_form").toggleClass("hidden");
