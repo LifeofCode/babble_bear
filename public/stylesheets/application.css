@@ -70,10 +70,7 @@ a:link {
 
 .category-name {
   margin: auto;
-  margin-top: 15%;
   display: block;
-  width: 30%;
-  padding-right: 10%;
   cursor: pointer;
 }
 
@@ -88,10 +85,8 @@ a:link {
 
 .category .content {
   display: table-cell;
-
-  height: 150px;
+  height: 200px;
   vertical-align: middle;
-
   width: 250px;
   text-align: center
 }

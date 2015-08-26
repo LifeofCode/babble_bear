@@ -8,7 +8,6 @@ $(document).ready(function(){
     var categoryDesc = $(this).attr("description");
     var color = $(this).attr("color");
 
-
     $.ajax({
       url: "/category/" + categoryId + "/topics",
       method: "GET",
@@ -77,7 +76,6 @@ $(document).ready(function(){
     });
     
     $(".level-heading").off("click").on("click", function(e){
-
       handleLevelClick(categoryId, topicId, this);
     });
 
@@ -168,6 +166,10 @@ $(document).ready(function(){
       openModal(gameView);
   }
 
+  // var concludeGame = function(){
+
+  // }
+
   var submitAnswer = function(levelWords, currentImage, questionCounter){
     $("body").off("submit").on("submit","#" + questionCounter + ".choose-word", function(e){
       e.preventDefault();
@@ -180,8 +182,13 @@ $(document).ready(function(){
     });
 
     $("body").on("click", ".show-button", function(){
-      questionCounter += 1;
-      executeGame(levelWords, questionCounter);
+      if (questionCounter < levelWords.length - 1){
+        questionCounter += 1;
+        executeGame(levelWords, questionCounter);
+        console.log(questionCounter)
+      }else{
+        console.log("else")
+      }
     });
   }
 
