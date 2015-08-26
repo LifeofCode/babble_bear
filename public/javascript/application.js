@@ -261,11 +261,12 @@ $(document).ready(function(){
   var gameConclusion = "<div class='modalDialog'>" +
                       "<div class='border-formatting'>" +
                         "<div class='modal-image-bar modal-border-formatting'>"+
-                            "<h3 class='modal-congrats-heading'>Congratulations!</h3>" +
+                            "<img src='congrats.gif' class='modal-img'>" +
                         "</div>" +
                         "<div class='modal-questions-bar'>" +
                           "<a href='#close' title='Close' class='close'>X</a>" +
                           "<div class='modal-congrats-content'>" +
+                            "<h3>Congratulations!</h3>" +
                             "<h3> <small> You've reached the end! </small></h3>" +
                             "<button type='button' class='back-to-levels'>Back to Levels</button>" +
                             "<button type='button' class='previous-question'>Previous Question</button>" +
