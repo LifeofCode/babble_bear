@@ -125,7 +125,6 @@ $(document).ready(function(){
   }
 
   var openModal = function(gameView){
-    console.log(gameView);
 
     if($(".level-heading").hasClass("play")){  
       $(".levels-bar").append(gameView);
@@ -155,46 +154,41 @@ $(document).ready(function(){
                       "</div>" +
                       "<div class='modal-questions-bar'>" +
                         "<a href='#close' title='Close' class='close'>X</a>" +
-                        "<form id='choose-word'>" + 
+                        "<form class='choose-word' id='" + questionCounter + "'>" + 
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
                           "<button type='submit class='check-answer'>Check Answer </button>" +
+                          "<button type='button' class='next-question'>Next Question</button>" +
                         "</form>" +
-                        "<button type='button' class='next-question'>Next Question</button>"
                       "</div>" +
                     "</div>" +
                   "</div>"  
-    //if ($(".modalDialog").length === 0){
-      openModal(gameView);
-    // }else{
 
-    // }
+      openModal(gameView);
   }
 
   var submitAnswer = function(levelWords, currentImage, questionCounter){
-    $("body").off("submit").on("submit","#choose-word", function(e){
+    $("body").off("submit").on("submit","#" + questionCounter + ".choose-word", function(e){
       e.preventDefault();
-      var checkedBox = $('input[type=radio]:checked', '#choose-word');
-      var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
+      var checkedBox = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word');
+      var userAnswer = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word').val();
+      
       handleAnswerCheck(levelWords, currentImage, userAnswer);
+      
       $(".next-question").addClass("show-button");
     });
 
     $("body").on("click", ".show-button", function(){
       questionCounter += 1;
-      console.log("go to next question");
-
       executeGame(levelWords, questionCounter);
     });
   }
 
   var executeGame = function(levelWords, questionCounter){
-    console.log("levelWords, questionCounter", levelWords, questionCounter);
     currentImage = levelWords[questionCounter].word_image;
     currentWord = levelWords[questionCounter].word;
     
-    console.log("currentWord, currentImage", currentWord, currentImage);
     displayQuestion(levelWords, currentWord, questionCounter, currentImage);
     submitAnswer(levelWords, currentImage, questionCounter);
 
@@ -231,6 +225,8 @@ $(document).ready(function(){
   var handleAnswerCheck = function(levelWords, currentImage, userAnswer){  
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
+        console.log("currentImage", currentImage)
+        console.log("levelWord.word, userAnswer", levelWord.word, userAnswer)
         if(userAnswer === levelWord.word){
           console.log("correct!");
         }else {
