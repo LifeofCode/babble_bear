@@ -325,8 +325,13 @@ button.next-question.show-button {
 }
 
 button.previous-question {
+  display: inline-block;
   border: 1px solid red;
   margin-left: 30px;
+}
+
+button.back-to-levels {
+  display: inline-block;
 }
 
 
@@ -336,7 +341,7 @@ button.check-answer {
   height: 50px;
   width: 160px;
   overflow: hidden
-  transition: all 0.3s ease-in 0s;
+  transition: all 0.5s;
 }
 
 .modal-congrats-content {
@@ -344,15 +349,20 @@ button.check-answer {
   margin-top: 15%;
 }
 
-.check-answer.right-answer {
+.right-answer {
+  display: inline-block;
   text-align: center;
   border: 1px solid darkgreen;
   background-color: green;
-  max-width: 50px;
-  max-height: 50px;
+  min-width: 60px;
+  min-height: 60px;
   border-radius: 50%;
 }
 
+.smiley-div {
+  height: 60px;
+  width: 60px;
+}
 .wrong-answer {
 
 }

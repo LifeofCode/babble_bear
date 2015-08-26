@@ -133,6 +133,12 @@ $(document).ready(function(){
         $(".modalDialog").remove();
       });
 
+      if($(".level-heading").hasClass("study")){
+        setTimeout(function(){
+          $(".modal-congrats-content").append("<button type='button' class='previous-question'>Previous Question</button>")
+        }, 0);
+      }
+
       flag = false;
   }
 
@@ -151,7 +157,6 @@ $(document).ready(function(){
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
                           "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
                           "<button type='submit' class='check-answer'>Check Answer </button>" +
-                          "<button type='button' class='next-question'>Next Question</button>" +
                         "</form>" +
                       "</div>" +
                     "</div>" +
@@ -168,8 +173,8 @@ $(document).ready(function(){
                             "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br></br></br>" +
                             "<h3><small> French: </small></h3>" +
                             "<h3 class='english_word level-div nohover' value='" + currentWord + "'>" + currentWord + "</h3><br>" +
-                            "<button type='button' class='next-question'>Next Question</button>" +
-                            "<button type='button' class='previous-question'>Previous Question</button>" +
+                            "<button type='button' class='previous-question'>Go Back</button>" +
+                            "<button type='button' class='next-question'>Continue</button>" +
                         "</div>" +
                       "</div>" +
                     "</div>"
@@ -194,9 +199,9 @@ $(document).ready(function(){
       handleAnswerCheck(levelWords, currentImage, userAnswer);
 
       if (questionCounter < levelWords.length - 1){
-        $(".next-question").addClass("show-button");
+        $(".check-answer").replaceWith("<button type='button' class='next-question show-button'>Continue</button>");
       }else{
-        $(".next-question").text("Done").addClass("show-button");
+        $(".check-answer").replaceWith("<button type='button' class='next-question show-button'>Done</button>");
       }
 
     });
@@ -250,7 +255,8 @@ $(document).ready(function(){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
-          $(".check-answer").text("^.^").addClass("right-answer");
+          // $(".check-answer").text("^.^").addClass("right-answer");
+          //$(".check-answer").replaceWith("<div class='right-answer'><img class='smiley-div' src='happy_icon.png'/></div>");
           console.log("correct!");
         }else {
           $(".check-answer").addClass("wrong-answer");
@@ -271,7 +277,6 @@ $(document).ready(function(){
                             "<h3>Congratulations!</h3>" +
                             "<h3> <small> You've reached the end! </small></h3>" +
                             "<button type='button' class='back-to-levels'>Back to Levels</button>" +
-                            "<button type='button' class='previous-question'>Previous Question</button>" +
                           "</div>" +
                         "</div>" +
                       "</div>" +
@@ -283,12 +288,10 @@ $(document).ready(function(){
 
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
-      
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     } else {
-      openModal(gameConclusion);
-      
+      openModal(gameConclusion)
     }
   });
 
