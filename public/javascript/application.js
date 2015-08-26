@@ -125,6 +125,7 @@ $(document).ready(function(){
   }
 
   var openModal = function(gameView){
+    console.log(gameView);
 
     if($(".level-heading").hasClass("play")){  
       $(".levels-bar").append(gameView);
@@ -137,10 +138,66 @@ $(document).ready(function(){
         $(".modalDialog").remove();
       });
 
-      flag = false
+      flag = false;
     }else{
+      flag = false;
       console.log("in else statement"); //append study view 
     }
+  }
+
+  var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage){
+    var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
+
+    var gameView = "<div class='modalDialog'>" +
+                    "<div class='border-formatting'>" +
+                      "<div class='modal-image-bar modal-border-formatting'>"+
+                        "<img src='" + currentImage + "' class='modal-img'>" +
+                      "</div>" +
+                      "<div class='modal-questions-bar'>" +
+                        "<a href='#close' title='Close' class='close'>X</a>" +
+                        "<form id='choose-word'>" + 
+                          "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
+                          "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
+                          "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
+                          "<button type='submit class='check-answer'>Check Answer </button>" +
+                        "</form>" +
+                        "<button type='button' class='next-question'>Next Question</button>"
+                      "</div>" +
+                    "</div>" +
+                  "</div>"  
+    //if ($(".modalDialog").length === 0){
+      openModal(gameView);
+    // }else{
+
+    // }
+  }
+
+  var submitAnswer = function(levelWords, currentImage, questionCounter){
+    $("body").off("submit").on("submit","#choose-word", function(e){
+      e.preventDefault();
+      var checkedBox = $('input[type=radio]:checked', '#choose-word');
+      var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
+      handleAnswerCheck(levelWords, currentImage, userAnswer);
+      $(".next-question").addClass("show-button");
+    });
+
+    $("body").on("click", ".show-button", function(){
+      questionCounter += 1;
+      console.log("go to next question");
+
+      executeGame(levelWords, questionCounter);
+    });
+  }
+
+  var executeGame = function(levelWords, questionCounter){
+    console.log("levelWords, questionCounter", levelWords, questionCounter);
+    currentImage = levelWords[questionCounter].word_image;
+    currentWord = levelWords[questionCounter].word;
+    
+    console.log("currentWord, currentImage", currentWord, currentImage);
+    displayQuestion(levelWords, currentWord, questionCounter, currentImage);
+    submitAnswer(levelWords, currentImage, questionCounter);
+
   }
 
   var handleLevelClick = function(categoryId, topicId, level){
@@ -167,38 +224,7 @@ $(document).ready(function(){
       $.each(questions, function(i, question){
         levelWords.push({word: question.word, word_image: question.word_image});
       });
-      
-      currentImage = levelWords[questionCounter].word_image;
-      currentWord = levelWords[questionCounter].word;
-
-      var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
-
-      var gameView = "<div class='modalDialog'>" +
-                      "<div class='border-formatting'>" +
-                        "<div class='modal-image-bar modal-border-formatting'>"+
-                          "<img src='" + currentImage + "' class='modal-img'>" +
-                        "</div>" +
-                        "<div class='modal-questions-bar'>" +
-                          "<a href='#close' title='Close' class='close'>X</a>" +
-                          "<form id='choose-word'>" + 
-                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[0] + "'>" + arrTwo[0] + "</h3><br>" +
-                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[1] + "'>" + arrTwo[1] + "</h3><br>" +
-                            "<h3 class='level-heading level-div nohover'><input id='word-one' name='question-word' type='radio' value='" + arrTwo[2] + "'>" + arrTwo[2] + "</h3><br>" +
-                            "<button type='submit class='check-answer'>Check Answer </button>" +
-                          "</form>" +
-                        "</div>" +
-                      "</div>" +
-                    "</div>"  
-      
-      openModal(gameView);
-
-      $("#choose-word").off("submit").on("submit", function(e){
-        e.preventDefault();
-        var checkedBox = $('input[type=radio]:checked', '#choose-word');
-        var userAnswer = $('input[type=radio]:checked', '#choose-word').val();
-        console.log(checkedBox)
-        handleAnswerCheck(levelWords, currentImage, userAnswer);
-      });
+      executeGame(levelWords, questionCounter);
     });
   }
 

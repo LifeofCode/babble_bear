@@ -323,3 +323,13 @@ form.choose-word {
     right: 0px;
 }
 
+button.next-question {
+  border: 1px solid red;
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
+
+button.next-question.show-button {
+  opacity: 1; 
+}
+
