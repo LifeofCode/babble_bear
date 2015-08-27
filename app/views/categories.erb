@@ -1,4 +1,23 @@
+
+<div class="header">
+  <!-- <nav class="nav">
+    <div id="title-babble-bear">
+      <img src="/Babble1.png"/>
+      <div id="bear-div">
+        <img src="https://s-media-cache-ak0.pinimg.com/236x/63/c8/58/63c858955ea82aa8b1fa7d3382af4b49.jpg" id="bear"/>
+      </div>
+    </div>
+  </nav>
+
+  <a href='/logout'>Logout Here </a> -->
+  <h5 class="center"><b>Babble Bear <img class="thumbnail-image" src="/teddy_bear_crop.png" ></div> </b></h5>
+  <br>
+  <hr>
+</div>
+
+
 <div class="categories">
+
   <% @categories.each do |category| %>
     <div id="cat<%= category.id %>" class="category" data="<%= category.id %>" name="<%= category.name %>" color="<%= category.color %>"  style="background-color:<%=category.color %>" description="<%= category.description %>">
       <div class='content'>
@@ -7,5 +26,4 @@
     </div>
   <% end %>
 
-<a href='/logout'>Logout Here </a>
 </div>
