@@ -134,7 +134,7 @@ $(document).ready(function(){
       });
 
       if($(".level-heading").hasClass("study")){
-        $(".modal-congrats-content").append("<button type='button' class='previous-question'>Go Back</button>")
+        $("<button type='button' class='previous-question'>Last question</button>").insertBefore(".back-to-levels")
       }
      
       flag = false;
@@ -168,12 +168,14 @@ $(document).ready(function(){
                         "<div class='modal-questions-bar'>" +
                           "<a href='#close' title='Close' class='close'>X</a>" +
                             "<h3><small> English: </small></h3>" +
-                            "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br></br></br>" +
+                            "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br>" +
                             "<h3><small> French: </small></h3>" +
                             "<h3 class='english_word level-div nohover' value='" + currentWord + "'>" + currentWord + "</h3><br>" +
-                            "<button type='button' class='previous-question'>Go Back</button>" +
-                            "<button type='button' class='next-question'>Continue</button>" +
                         "</div>" +
+                            "<div class='study-buttons-div'>"+
+                              "<button type='button' class='previous-question'>Last Question</button>" +
+                              "<button type='button' class='next-question'>Continue</button>" +
+                            "</div>"+
                       "</div>" +
                     "</div>"
 
@@ -194,12 +196,23 @@ $(document).ready(function(){
       var checkedBox = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word');
       var userAnswer = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word').val();
 
-      handleAnswerCheck(levelWords, currentImage, userAnswer);
+      var rightAnswer = handleAnswerCheck(levelWords, currentImage, userAnswer);
 
       if (questionCounter < levelWords.length - 1){
-        $(".check-answer").replaceWith("<button type='button' class='next-question show-button'>Continue</button>");
+       
+        $(".check-answer").fadeOut("slow", function(){
+          $(this).replaceWith("<button type='button' class='next-question'>Continue</button>")
+          setTimeout(function(){
+           $(".next-question").addClass("show-button"); 
+          }, 0);
+        })
       }else{
-        $(".check-answer").replaceWith("<button type='button' class='next-question show-button'>Done</button>");
+        $(".check-answer").fadeOut("slow", function(){
+          $(this).replaceWith("<button type='button' class='next-question'>Done</button>")
+          setTimeout(function(){
+           $(".next-question").addClass("show-button"); 
+          }, 0);
+        })
       }
 
     });
@@ -253,12 +266,9 @@ $(document).ready(function(){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
-          // $(".check-answer").text("^.^").addClass("right-answer");
-          //$(".check-answer").replaceWith("<div class='right-answer'><img class='smiley-div' src='happy_icon.png'/></div>");
-          console.log("correct!");
+          $(".choose-word").append("<div class='pink-background'><img class='smiley-div' src='happy_icon.png'/><span class='right-answer'>You're Right! Good Job! Correct! Bien Fait!</span></div>");
         }else {
-          $(".check-answer").addClass("wrong-answer");
-          console.log("wrong!");
+          $(".choose-word").append("<div class='pink-background'><img class='sad-smiley-div' src='sad_icon.png'/><span class='wrong-answer'>Sorry! The correct answer is: " + levelWord.word + ". <br> Désolé! La bonne réponse est: " + levelWord.word + ".</span></div>");
         }
       }
     });

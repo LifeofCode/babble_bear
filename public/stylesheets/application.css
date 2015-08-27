@@ -216,10 +216,6 @@ a:link {
   padding: 5px 20px 13px 20px;
   border-radius: 10px;
   background: #fff;
-  background: -moz-linear-gradient(#fff, #999);
-  background: -webkit-linear-gradient(#fff, #999);
-  background: -o-linear-gradient(#fff, #999);
-
 }
 
 .modal-border-formatting{
@@ -228,8 +224,9 @@ a:link {
 }
 
 .modal-questions-bar {
-  margin-top: 65px;
-  margin-left: 400px;
+  padding-top: 65px;
+  margin-left: 500px;
+  margin-right: 15%;
 }
 
 .modal-image-bar {
@@ -315,9 +312,10 @@ form.choose-word {
 
 button.next-question {
   border: 1px solid red;
-  margin-left: 30px;
+  margin-top: 7%; 
+  margin-left: 25%;
   opacity: 0;
-  transition: all 0.3s ease-in;
+  transition: all 0.5s ease-in;
 }
 
 button.next-question.show-button {
@@ -327,42 +325,74 @@ button.next-question.show-button {
 button.previous-question {
   display: inline-block;
   border: 1px solid red;
+  margin-top: 7%;
   margin-left: 30px;
 }
 
 button.back-to-levels {
   display: inline-block;
+  margin-top: 7%;
+  margin-left: 15%;
 }
-
 
 button.check-answer {
-  text-align: center;
+  margin-top: 7%;
+  margin-left: 15%;
   border: 1px solid red;
-  height: 50px;
-  width: 160px;
-  overflow: hidden
-  transition: all 0.5s;
+  /*transition: all 0.5s ease-in;*/
 }
 
+.study-buttons-div {
+  margin-left: 46.5%;
+}
 .modal-congrats-content {
   text-align: center;
   margin-top: 15%;
 }
 
 .right-answer {
-  display: inline-block;
-  text-align: center;
-  border: 1px solid darkgreen;
-  background-color: green;
-  min-width: 60px;
-  min-height: 60px;
-  border-radius: 50%;
+  display: block;
+  margin-left: 55px;
 }
 
-.smiley-div {
-  height: 60px;
-  width: 60px;
-}
 .wrong-answer {
+  display: block;
+  margin-left: 55px;
+  font-size: 1.2rem;
+}
 
+.pink-background {
+  background-color: pink;
+  position: relative;
+}
+.smiley-div {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  height: 50px;
+  width: 50px;
+}
+
+.sad-smiley-div {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 7px;
+  margin-top: 15px;
+  height: 40px;
+  width: 40px;
+}
+
+.close {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  border: 1px solid red;
+  border-radius: 50%;
+  background-color: #FF6157;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.3;
 }
