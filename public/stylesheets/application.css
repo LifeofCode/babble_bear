@@ -427,6 +427,11 @@ button.check-answer {
   background-color: pink;
   position: relative;
 }
+
+.green-background {
+  background-color: lightgreen;
+  position: relative;
+}
 .smiley-div {
   position: absolute;
   display: inline-block;
