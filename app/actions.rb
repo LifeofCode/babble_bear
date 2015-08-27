@@ -12,7 +12,7 @@ get '/levels' do
   erb :levels_view
 end
 
-get '/categories' do  
+get '/categories' do
   @categories = Category.all
 
   if session[:id]
@@ -57,7 +57,7 @@ post '/signup' do
 
   if @user.save
     session[:id] = @user.id
-    erb :categories
+    redirect '/categories'
   else
     redirect '/'
   end
