@@ -15,7 +15,7 @@ $(document).ready(function(){
       dataType: "json"
     }).done(function(topics){
       $("body").empty();
-      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"><div class="mode-heading"><h2 style="color:'+color+'"> Select Topic </h2></div> </div> </div>');
+      $("body").append('<div class="topics-bar" style="background-color:'+color+'"> <div class="border-formatting"> <br> <br> <h2 class="topic-heading">'+ categoryName +'</h2> <small><p class="topic-description">'+categoryDesc+'</p></small> </div> </div> <div class="levels-bar"> <div class="border-formatting"><div class="mode-heading"><br><h2 style="color:'+color+'"> Select Topic </h2></div> </div> </div>');
       $(topics).each(function(index, topic){
         $(".levels-bar .border-formatting").append('<div class="level-div"><br><h4 class="topics-heading"color="'+color+'" style="color:'+color+'" data="'+parseInt(topic.id)+'" name="'+topic.name+'" description="'+topic.description+'">'+topic.name+'</h4></div>');
       });

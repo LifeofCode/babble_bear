@@ -3,11 +3,51 @@
   border: 1px solid red;
 }*/
 
+@@font-face {
+  font-family: Interstate Light;
+  src: local('Interstate Light');
+}
+
+.title-div{
+  margin: auto;
+
+}
+
+.center{
+  text-align: center;
+  font-size: 100px;
+  font-family: "Allura";
+}
+
+.thumbnail-image{
+  height:90px;
+  margin-top:10px;
+  vertical-align: -10px;
+}
+
+.float-right{
+  float:right;
+}
+
 body {
   /*background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);*/
   /*background: -webkit-radial-gradient(circle, white, #66E066, #00CC00);*/
   /*background: -webkit-radial-gradient(circle, white, #ADEBFF, #33CCFF);*/
   margin: 0;
+  font-family: "Interstate", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+hr{
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.header{
+  display: block !important;
+  height: 100px;
+  font: Interstate;
+  /*background-image: url(https://upload.wikimedia.org/wikipedia/commons/d/d7/Vienna_-_Baroque_Bookshelves_detail_-_6729.jpg);*/
+  color: #A4744E;
 }
 
 .nav-ul {
@@ -38,7 +78,6 @@ a:link {
   right: 0;
   width: 50%;
   height: 10%;
-  /*background: -webkit-linear-gradient(#99EB99, #66E066, #00CC00, #00B800);*/
 }
 
 .topics-heading{
@@ -62,10 +101,11 @@ a:link {
 }
 
 .categories {
-  position: absolute;
   text-align: center;
-  top: 50%;
-  height: 100%;
+  top: 0%;
+  height:700px;
+  background-image: url(http://www.flash-screen.com/free-wallpaper/vector-pastoral-scenery-wallpapers/vector-wallpaper-glassland,1440x900,44371.jpg);
+  background-position: 0px -90px;
 }
 
 .category-name {
@@ -81,8 +121,22 @@ a:link {
   width: 250px;
   height: 200px;
   cursor: pointer;
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px grey;
+  opacity: 75%;
+
 }
 
+.categories .category:active {
+  display: inline-block;
+  text-align: center;
+  margin: 50px;
+  width: 250px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 15px;
+  box-shadow: none;
+}
 
 .category .content {
   display: table-cell;
@@ -161,6 +215,12 @@ a:link {
   font-weight: 600;
   cursor: pointer;
 }
+
+.topics-heading:not(.nohover):hover {
+  font-weight: 600;
+  cursor: pointer;
+}
+
 
 .levels-bar {
   margin-left: 50%;
@@ -276,6 +336,8 @@ form.choose-word {
   -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
   left: 6%;
   bottom:0;
+  font-family: "Interstate", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+
 }
 .onoffswitch-checkbox {
   display: none !important;
@@ -289,8 +351,9 @@ form.choose-word {
   transition: margin 0.3s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-  display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-  font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 32px;
+  font-size: 14px; color: white;   font-family: "Interstate", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+ font-weight: bold;
   box-sizing: border-box;
 }
 .onoffswitch-inner:before {
