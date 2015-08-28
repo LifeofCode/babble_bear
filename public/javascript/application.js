@@ -134,18 +134,13 @@ $(document).ready(function(){
       });
 
       if($(".level-heading").hasClass("study")){
-        if(view === studyView){
-          $("<button type='button' class='previous-question'>Last question</button>").insertBefore(".next-question")
-        }
         if(view === gameConclusion){
-          $("<button type='button' class='previous-question'>Last question</button>").insertBefore(".back-to-levels")
+          $("<button type='button' class='previous-question'>Last question&nbsp;</button>").insertBefore(".back-to-levels")
         }
       }
      
       flag = false;
   }
-  var gameView = '';
-  var studyView = '';
 
   var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord){
     var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
@@ -180,7 +175,7 @@ $(document).ready(function(){
                             "<h3 class='english_word level-div nohover' value='" + currentWord + "'>" + currentWord + "</h3><br>" +
                         "</div>" +
                             "<div class='study-buttons-div'>"+
-                              // "<button type='button' class='previous-question'>Last Question</button>" +
+                              "<button type='button' class='previous-question'>Last Question</button>" +
                               "<button type='button' class='next-question'>Continue</button>" +
                             "</div>"+
                       "</div>" +
@@ -209,7 +204,6 @@ $(document).ready(function(){
         var rightAnswer = handleAnswerCheck(levelWords, currentImage, userAnswer);
 
         if (questionCounter < levelWords.length - 1){
-         
           $(".check-answer").fadeOut("slow", function(){
             $(this).replaceWith("<button type='button' class='next-question'>Continue</button>")
             setTimeout(function(){
@@ -230,7 +224,6 @@ $(document).ready(function(){
     
     if($(".level-heading").hasClass("study")){  
       setTimeout(function(){
-        // display next question button until last question in study mode, then change text to done and display
         if (questionCounter < levelWords.length - 1){
           $(".next-question").addClass("show-button");
         }else{
@@ -240,6 +233,9 @@ $(document).ready(function(){
     }
   }
   
+  var clearView = function(){
+    $(".modalDialog").remove();
+  }
 
   var handleLevelClick = function(categoryId, topicId, level){
     if (flag){
@@ -271,16 +267,21 @@ $(document).ready(function(){
     });
   }
 
+  numCorrectAnswers = 0;
+  
   var handleAnswerCheck = function(levelWords, currentImage, userAnswer){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
           $(".choose-word").append("<div class='green-background'><img class='smiley-div' src='happy_icon.png'/><span class='right-answer'>You're Right! Good Job! Correct! Bien Fait!</span></div>");
+            numCorrectAnswers += 1;
+            $("body").data("numCorrectAnswers", numCorrectAnswers);
         }else {
           $(".choose-word").append("<div class='pink-background'><img class='sad-smiley-div' src='sad_icon.png'/><span class='wrong-answer'>Sorry! The correct answer is: " + levelWord.word + ". <br> Désolé! La bonne réponse est: " + levelWord.word + ".</span></div>");
         }
       }
     });
+    
   }
 
   var gameConclusion = "<div class='modalDialog gameConclusion'>" +
@@ -291,8 +292,9 @@ $(document).ready(function(){
                         "<div class='modal-questions-bar'>" +
                           "<a href='#close' title='Close' class='close'>X</a>" +
                           "<div class='modal-congrats-content'>" +
-                            "<h3>Congratulations!</h3>" +
-                            "<h3> <small> You've reached the end! </small></h3>" +
+                            "<h3 class='english_word'>Congratulations! Félicitations!</h3>" +
+                            "<h3> You've reached the end!</h3>" +
+                            "<h2> You got " + numCorrectAnswers + " right!</h2>" +
                             "<button type='button' class='back-to-levels'>Back to Levels</button>" +
                           "</div>" +
                         "</div>" +
@@ -305,11 +307,9 @@ $(document).ready(function(){
 
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
-      console.log(questionCounter)
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     } else {
-      console.log(questionCounter)
       openModal(gameConclusion)
     }
   });
@@ -317,15 +317,11 @@ $(document).ready(function(){
   $("body").on("click", ".previous-question", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
-    //debugger
-    console.log(questionCounter, "outside if");
-    console.log(levelWords)
-
+  
     if (questionCounter <= levelWords.length - 1  && questionCounter >= 0){
       executeGame(levelWords, questionCounter);
       questionCounter -= 1;
-      $("body").data("question-counter", questionCounter);
-      console.log(questionCounter)
+      $("body").data("question-counter", questionCounter); 
     }else{
       questionCounter = levelWords.length - 1
       $("body").data("question-counter", questionCounter);
