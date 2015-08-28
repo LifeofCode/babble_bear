@@ -13,6 +13,7 @@
 
 }
 
+
 .center{
   text-align: center;
   font-size: 100px;
@@ -216,6 +217,13 @@ a:link {
   cursor: pointer;
 }
 
+
+.locked:hover {
+  font-weight:normal !important;
+  cursor:not-allowed !important;
+
+}
+
 .topics-heading:not(.nohover):hover {
   font-weight: 600;
   cursor: pointer;
@@ -375,7 +383,7 @@ form.choose-word {
 
 button.next-question {
   border: 1px solid red;
-  margin-top: 7%; 
+  margin-top: 7%;
   margin-left: 25%;
   opacity: 0;
   transition: all 0.5s ease-in;

@@ -39,18 +39,34 @@ $(document).ready(function(){
 
     $(".level-div").addClass("remove-extra").addClass("remove-visual");
 
+    debugger;
     setTimeout(function(){
+      var headings = document.getElementsByClassName("level-heading");
+
       $(".level-div").addClass("remove-complete");
       $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
       $(".onoffswitch").fadeIn();
+      for(var j=1; j <= headings.length; j++){
+        console.log("inside for loop")
+        // setTimeout(function(){ console.log("zzzzzzzzz");
+        $(headings[j]).addClass("locked").add('<img id="'+(j+1)+'" class="locked-icon" src="https://cdn4.iconfinder.com/data/icons/whsr-january-flaticon-set/512/lock.png" style="'+
+        'height: 50px;'+
+        'vertical-align: text-bottom;'+
+        'margin-left: 560px;'+
+        'display:none;' +
+        'position:absolute' +
+        '">').appendTo(headings[j]).fadeIn();
+      }
+  //
     }, 1000);
 
 
     var headings = document.getElementsByClassName("topics-heading");
-
     for (var i=0; i <= headings.length; i++){
       $(headings[i]).text("Level " + (i+1));
     }
+
+    // debugger;
 
     $(".topics-heading").addClass("level-heading");
 
@@ -122,7 +138,7 @@ $(document).ready(function(){
     return arrTwo;
   }
 
-  var openModal = function(view){
+  var openModal = function(view, levelId){
       $(".levels-bar").append(view);
 
       setTimeout(function(){
@@ -136,11 +152,11 @@ $(document).ready(function(){
       if($(".level-heading").hasClass("study")){
         $("<button type='button' class='previous-question'>Last question</button>").insertBefore(".back-to-levels")
       }
-     
+
       flag = false;
   }
 
-  var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord){
+  var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord, levelId){
     var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
 
     var gameView = "<div class='modalDialog'>" +
@@ -180,13 +196,13 @@ $(document).ready(function(){
                     "</div>"
 
     if($(".level-heading").hasClass("play")){
-      openModal(gameView);
+      openModal(gameView, levelId);
     }else{
-      openModal(studyView);
+      openModal(studyView, levelId);
     }
   }
 
-  var executeGame = function(levelWords, questionCounter){
+  var executeGame = function(levelWords, questionCounter, levelId){
     currentWord = levelWords[questionCounter].word;
     currentImage = levelWords[questionCounter].word_image;
     currentEnglishWord = levelWords[questionCounter].english_word;
@@ -199,27 +215,27 @@ $(document).ready(function(){
       var rightAnswer = handleAnswerCheck(levelWords, currentImage, userAnswer);
 
       if (questionCounter < levelWords.length - 1){
-       
+
         $(".check-answer").fadeOut("slow", function(){
           $(this).replaceWith("<button type='button' class='next-question'>Continue</button>")
           setTimeout(function(){
-           $(".next-question").addClass("show-button"); 
+           $(".next-question").addClass("show-button");
           }, 0);
         })
       }else{
         $(".check-answer").fadeOut("slow", function(){
           $(this).replaceWith("<button type='button' class='next-question'>Done</button>")
           setTimeout(function(){
-           $(".next-question").addClass("show-button"); 
+           $(".next-question").addClass("show-button");
           }, 0);
         })
       }
 
     });
-    
-    displayQuestion(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord);
-    
-    if($(".level-heading").hasClass("study")){  
+
+    displayQuestion(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord, levelId);
+
+    if($(".level-heading").hasClass("study")){
       setTimeout(function(){
         // display next question button until last question in study mode, then change text to done and display
         if (questionCounter < levelWords.length - 1){
@@ -237,6 +253,13 @@ $(document).ready(function(){
     }
 
     flag = true;
+
+    var gameType;
+    if ($(level).hasClass("study")){
+      gameType = "study";
+    }
+    else gameType = "play";
+
 
     var categoryId = categoryId;
     var topicId = topicId;
@@ -257,8 +280,10 @@ $(document).ready(function(){
       });
       $("body").data("level-words", levelWords);
       $("body").data("question-counter", questionCounter);
+      $("body").data("level-id", levelId);
+      $("body").data("game-type", gameType);
 
-      executeGame(levelWords, questionCounter);
+      executeGame(levelWords, questionCounter, levelId);
     });
   }
 
@@ -274,7 +299,8 @@ $(document).ready(function(){
     });
   }
 
-  var gameConclusion = "<div class='modalDialog'>" +
+  var showGameConclusion = function(levelId){
+    var gameConclusionStudy = "<div class='modalDialog'>" +
                       "<div class='border-formatting'>" +
                         "<div class='modal-image-bar modal-border-formatting'>"+
                             "<img src='congrats.gif' class='modal-img'>" +
@@ -284,41 +310,87 @@ $(document).ready(function(){
                           "<div class='modal-congrats-content'>" +
                             "<h3>Congratulations!</h3>" +
                             "<h3> <small> You've reached the end! </small></h3>" +
-                            "<button type='button' class='back-to-levels'>Back to Levels</button>" +
+                            "<button type='button' data='"+levelId+"' class='back-to-levels study-done'>Back to Levels</button>" +
                           "</div>" +
                         "</div>" +
                       "</div>" +
                     "</div>"
 
+    var gameConclusionPlay = "<div class='modalDialog'>" +
+                      "<div class='border-formatting'>" +
+                        "<div class='modal-image-bar modal-border-formatting'>"+
+                            "<img src='congrats.gif' class='modal-img'>" +
+                        "</div>" +
+                        "<div class='modal-questions-bar'>" +
+                          "<a href='#close' title='Close' class='close'>X</a>" +
+                          "<div class='modal-congrats-content'>" +
+                            "<h3>Congratulations!</h3>" +
+                            "<h3> <small> You've reached the end! </small></h3>" +
+                            "<button type='button' data='"+levelId+"' class='back-to-levels game-done'>Back to Levels</button>" +
+                          "</div>" +
+                        "</div>" +
+                      "</div>" +
+                    "</div>"
+    var gameType = $("body").data("game-type");
+    if (gameType === "study"){
+      return gameConclusionStudy;
+    }
+    else {
+      return gameConclusionPlay
+    }
+}
+
   $("body").on("click", ".show-button", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
+    var levelId = $("body").data("level-id");
+
 
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
-      
+
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     } else {
-      openModal(gameConclusion)
+      gameConclusion = showGameConclusion(levelId)
+      openModal(gameConclusion, levelId);
     }
   });
 
   $("body").on("click", ".previous-question", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
+    var levelId = $("body").data("level-id");
 
     if (questionCounter > 0){
       questionCounter -= 1;
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     }else{
-      openModal(gameConclusion);
+      gameConclusion = showGameConclusion(levelId)
+      openModal(gameConclusion, levelId);
     }
   });
 
-  $("body").on("click", ".back-to-levels", function(){
+  var removeLock = function(levelNumber){
+    var headings = document.getElementsByClassName("level-heading");
+    console.log(headings[levelNumber]);
+    $(headings[levelNumber]).removeClass("locked");
+    var image = document.getElementById(parseInt(levelNumber)+1);
+    console.log(image);
+    $(image).fadeOut();
+  }
+
+  $("body").on("click", ".study-done", function(){
     $(".modalDialog").remove();
+  });
+
+
+  $("body").on("click", ".game-done", function(){
+    var levelToUnlock = $(".game-done").attr("data");
+    console.log(levelToUnlock)
+    $(".modalDialog").remove();
+    removeLock(levelToUnlock);
   });
 
   //switch between login and sign up form
