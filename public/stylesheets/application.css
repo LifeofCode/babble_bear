@@ -13,6 +13,7 @@
 
 }
 
+
 .center{
   text-align: center;
   font-size: 100px;
@@ -208,7 +209,7 @@ a:link {
 }
 
 .level-heading {
-  color: #e53935;
+  color: #2196f3;
 }
 
 .level-heading:not(.nohover):hover {
@@ -216,9 +217,20 @@ a:link {
   cursor: pointer;
 }
 
+
+.locked:hover {
+  font-weight:normal !important;
+  cursor:not-allowed !important;
+
+}
+
 .topics-heading:not(.nohover):hover {
   font-weight: 600;
   cursor: pointer;
+}
+
+.topic-description {
+  font-size: 15px;
 }
 
 .levels-bar {
@@ -290,11 +302,14 @@ a:link {
 }
 
 .modal-image-bar {
-  background-color: #e53935;
+  background-color: #2196f3;
   height: 100%;
   width: 40%;
   position:absolute;
   color: white;
+  border-top-left-radius: 2%;
+  border-bottom-left-radius: 2%;
+
 }
 
 .modal-img {
@@ -350,12 +365,14 @@ form.choose-word {
 .onoffswitch-inner:before {
   content: "STUDY";
   padding-left: 10px;
-  background-color: #F44336; color: #FFFFFF;
+  background-color: #2196f3;
+  color: #FFFFFF;
 }
 .onoffswitch-inner:after {
   content: "PLAY";
   padding-right: 10px;
-  background-color: #C62828; color: #FFFFFF;
+  background-color: #2276f3;
+  color: #FFFFFF;
   text-align: right;
 }
 .onoffswitch-switch {
@@ -374,8 +391,8 @@ form.choose-word {
 }
 
 button.next-question {
-  border: 1px solid red;
-  margin-top: 7%; 
+  border: 1px solid #2196f3;
+  margin-top: 7%;
   margin-left: 25%;
   opacity: 0;
   transition: all 0.5s ease-in;
@@ -387,21 +404,22 @@ button.next-question.show-button {
 
 button.previous-question {
   display: inline-block;
-  border: 1px solid red;
+  border: 1px solid #2196f3;
   margin-top: 7%;
   margin-left: 30px;
 }
 
 button.back-to-levels {
+  border: 1px solid #2196f3;
   display: inline-block;
   margin-top: 7%;
-  margin-left: 15%;
+  margin-left: 30px;
 }
 
 button.check-answer {
   margin-top: 7%;
   margin-left: 15%;
-  border: 1px solid red;
+  border: 1px solid #2196f3;
 }
 
 .study-buttons-div {
@@ -410,6 +428,7 @@ button.check-answer {
 .modal-congrats-content {
   text-align: center;
   margin-top: 15%;
+  width: 300px;
 }
 
 .right-answer {
@@ -425,6 +444,11 @@ button.check-answer {
 
 .pink-background {
   background-color: pink;
+  position: relative;
+}
+
+.green-background {
+  background-color: lightgreen;
   position: relative;
 }
 .smiley-div {
@@ -457,4 +481,12 @@ button.check-answer {
   font-size: 14px;
   text-align: center;
   line-height: 1.3;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.english_word {
+  color: #2196f3;
 }

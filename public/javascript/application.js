@@ -39,18 +39,31 @@ $(document).ready(function(){
 
     $(".level-div").addClass("remove-extra").addClass("remove-visual");
 
+    debugger;
     setTimeout(function(){
+      var headings = document.getElementsByClassName("level-heading");
+
       $(".level-div").addClass("remove-complete");
       $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
       $(".onoffswitch").fadeIn();
+      for(var j=1; j <= headings.length; j++){
+        $(headings[j]).addClass("locked").add('<img id="'+(j+1)+'" class="locked-icon" src="https://cdn4.iconfinder.com/data/icons/whsr-january-flaticon-set/512/lock.png" style="'+
+        'height: 50px;'+
+        'vertical-align: text-bottom;'+
+        'margin-left: 560px;'+
+        'display:none;' +
+        'position:absolute' +
+        '">').appendTo(headings[j]).fadeIn();
+      }
+  //
     }, 1000);
 
 
     var headings = document.getElementsByClassName("topics-heading");
-
     for (var i=0; i <= headings.length; i++){
       $(headings[i]).text("Level " + (i+1));
     }
+
 
     $(".topics-heading").addClass("level-heading");
 
@@ -122,7 +135,7 @@ $(document).ready(function(){
     return arrTwo;
   }
 
-  var openModal = function(view){
+  var openModal = function(view, levelId){
       $(".levels-bar").append(view);
 
       setTimeout(function(){
@@ -134,16 +147,18 @@ $(document).ready(function(){
       });
 
       if($(".level-heading").hasClass("study")){
-        $("<button type='button' class='previous-question'>Last question</button>").insertBefore(".back-to-levels")
-      }
-     
+      //   if(view === gameConclusion){
+          $("<button type='button' class='previous-question'>Last question&nbsp;</button>").insertBefore(".back-to-levels")
+        }
+      // }
+
       flag = false;
   }
 
-  var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord){
+  var displayQuestion = function(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord, levelId){
     var arrTwo = randomizeQuestion(questionArr(levelWords, currentWord, questionCounter));
 
-    var gameView = "<div class='modalDialog'>" +
+    gameView = "<div class='modalDialog'>" +
                     "<div class='border-formatting'>" +
                       "<div class='modal-image-bar modal-border-formatting'>"+
                         "<img src='" + currentImage + "' class='modal-img'>" +
@@ -160,12 +175,12 @@ $(document).ready(function(){
                     "</div>" +
                   "</div>"
 
-    var studyView ="<div class='modalDialog'>" +
+    studyView ="<div class='modalDialog'>" +
                       "<div class='border-formatting'>" +
                         "<div class='modal-image-bar modal-border-formatting'>"+
                           "<img src='" + currentImage + "' class='modal-img'>" +
                         "</div>" +
-                        "<div class='modal-questions-bar'>" +
+                        "<div class='modal-questions-bar' id='"+ questionCounter + "'>" +
                           "<a href='#close' title='Close' class='close'>X</a>" +
                             "<h3><small> English: </small></h3>" +
                             "<h3 class='english_word level-div nohover' value='" + currentEnglishWord + "'>" + currentEnglishWord + "</h3><br>" +
@@ -180,48 +195,48 @@ $(document).ready(function(){
                     "</div>"
 
     if($(".level-heading").hasClass("play")){
-      openModal(gameView);
+      openModal(gameView, levelId);
     }else{
-      openModal(studyView);
+      openModal(studyView, levelId);
     }
   }
 
-  var executeGame = function(levelWords, questionCounter){
+  var executeGame = function(levelWords, questionCounter, levelId){
     currentWord = levelWords[questionCounter].word;
     currentImage = levelWords[questionCounter].word_image;
     currentEnglishWord = levelWords[questionCounter].english_word;
 
-    $("body").off("submit").on("submit","#" + questionCounter + ".choose-word", function(e){
-      e.preventDefault();
-      var checkedBox = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word');
-      var userAnswer = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word').val();
-
-      var rightAnswer = handleAnswerCheck(levelWords, currentImage, userAnswer);
-
-      if (questionCounter < levelWords.length - 1){
-       
-        $(".check-answer").fadeOut("slow", function(){
-          $(this).replaceWith("<button type='button' class='next-question'>Continue</button>")
-          setTimeout(function(){
-           $(".next-question").addClass("show-button"); 
-          }, 0);
-        })
-      }else{
-        $(".check-answer").fadeOut("slow", function(){
-          $(this).replaceWith("<button type='button' class='next-question'>Done</button>")
-          setTimeout(function(){
-           $(".next-question").addClass("show-button"); 
-          }, 0);
-        })
-      }
-
-    });
-    
     displayQuestion(levelWords, currentWord, questionCounter, currentImage, currentEnglishWord);
-    
-    if($(".level-heading").hasClass("study")){  
+
+    if($(".level-heading").hasClass("play")){
+      $("body").off("submit").on("submit","#" + questionCounter + ".choose-word", function(e){
+        e.preventDefault();
+        var checkedBox = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word');
+        var userAnswer = $('input[type=radio]:checked', '#' + questionCounter + '.choose-word').val();
+
+        var rightAnswer = handleAnswerCheck(levelWords, currentImage, userAnswer);
+
+        if (questionCounter < levelWords.length - 1){
+          $(".check-answer").fadeOut("slow", function(){
+            $(this).replaceWith("<button type='button' class='next-question'>Continue</button>")
+            setTimeout(function(){
+             $(".next-question").addClass("show-button");
+            }, 0);
+          })
+        }else{
+          $(".check-answer").fadeOut("slow", function(){
+            $(this).replaceWith("<button type='button' class='next-question'>Done</button>")
+            setTimeout(function(){
+             $(".next-question").addClass("show-button");
+            }, 0);
+          })
+        }
+      });
+    }
+
+
+    if($(".level-heading").hasClass("study")){
       setTimeout(function(){
-        // display next question button until last question in study mode, then change text to done and display
         if (questionCounter < levelWords.length - 1){
           $(".next-question").addClass("show-button");
         }else{
@@ -231,6 +246,10 @@ $(document).ready(function(){
     }
   }
 
+  var clearView = function(){
+    $(".modalDialog").remove();
+  }
+
   var handleLevelClick = function(categoryId, topicId, level){
     if (flag){
       return false;
@@ -238,11 +257,17 @@ $(document).ready(function(){
 
     flag = true;
 
+    var gameType;
+    if ($(level).hasClass("study")){
+      gameType = "study";
+    }
+    else gameType = "play";
+
+
     var categoryId = categoryId;
     var topicId = topicId;
-    var levelId = $(level).attr("data");
     var levelWords = [];
-
+    var levelId = $(level).attr("data");
     var questionCounter = 0;
     var currentImage = '';
     var currentWord = '' ;
@@ -257,24 +282,33 @@ $(document).ready(function(){
       });
       $("body").data("level-words", levelWords);
       $("body").data("question-counter", questionCounter);
+      $("body").data("level-id", levelId);
+      $("body").data("game-type", gameType);
 
-      executeGame(levelWords, questionCounter);
+      executeGame(levelWords, questionCounter, levelId);
     });
   }
+
+  numCorrectAnswers = 0;
 
   var handleAnswerCheck = function(levelWords, currentImage, userAnswer){
     $.each(levelWords, function(i, levelWord){
       if (levelWord.word_image === currentImage){
         if(userAnswer === levelWord.word){
-          $(".choose-word").append("<div class='pink-background'><img class='smiley-div' src='happy_icon.png'/><span class='right-answer'>You're Right! Good Job! Correct! Bien Fait!</span></div>");
+          $(".choose-word").append("<div class='green-background'><img class='smiley-div' src='happy_icon.png'/><span class='right-answer'>You're Right! Good Job! Correct! Bien Fait!</span></div>");
+            numCorrectAnswers += 1;
+            $("body").data("numCorrectAnswers", numCorrectAnswers);
         }else {
           $(".choose-word").append("<div class='pink-background'><img class='sad-smiley-div' src='sad_icon.png'/><span class='wrong-answer'>Sorry! The correct answer is: " + levelWord.word + ". <br> Désolé! La bonne réponse est: " + levelWord.word + ".</span></div>");
         }
       }
     });
+
   }
 
-  var gameConclusion = "<div class='modalDialog'>" +
+  var showGameConclusion = function(levelId){
+    console.log(numCorrectAnswers);
+    var gameConclusionStudy = "<div class='modalDialog'>" +
                       "<div class='border-formatting'>" +
                         "<div class='modal-image-bar modal-border-formatting'>"+
                             "<img src='congrats.gif' class='modal-img'>" +
@@ -284,41 +318,87 @@ $(document).ready(function(){
                           "<div class='modal-congrats-content'>" +
                             "<h3>Congratulations!</h3>" +
                             "<h3> <small> You've reached the end! </small></h3>" +
-                            "<button type='button' class='back-to-levels'>Back to Levels</button>" +
+                            "<button type='button' data='" + levelId + "' class='back-to-levels study-done'>Back to Levels</button>" +
                           "</div>" +
                         "</div>" +
                       "</div>" +
                     "</div>"
 
+    var gameConclusionPlay = "<div class='modalDialog'>" +
+                      "<div class='border-formatting'>" +
+                        "<div class='modal-image-bar modal-border-formatting'>"+
+                            "<img src='congrats.gif' class='modal-img'>" +
+                        "</div>" +
+                        "<div class='modal-questions-bar'>" +
+                          "<a href='#close' title='Close' class='close'>X</a>" +
+                          "<div class='modal-congrats-content'>" +
+                            "<h3 class='english_word'>Congratulations! Félicitations!</h3>" +
+                            "<h3> You've reached the end!</h3>" +
+                            "<h2> You got " + numCorrectAnswers + " right!</h2>" +
+                              "<button type='button' data='" + levelId + "' class='back-to-levels game-done'>Back to Levels</button>" +
+                          "</div>" +
+                        "</div>" +
+                      "</div>" +
+                    "</div>"
+    var gameType = $("body").data("game-type");
+    if (gameType === "study"){
+      return gameConclusionStudy;
+    }
+    else {
+      return gameConclusionPlay;
+    }
+}
+
   $("body").on("click", ".show-button", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
+    var levelId = $("body").data("level-id");
+
 
     if (questionCounter < levelWords.length - 1){
       questionCounter += 1;
-      
       $("body").data("question-counter", questionCounter);
       executeGame(levelWords, questionCounter);
     } else {
-      openModal(gameConclusion)
+      gameConclusion = showGameConclusion(levelId)
+      openModal(gameConclusion, levelId);
     }
   });
 
   $("body").on("click", ".previous-question", function(e){
     var levelWords = $("body").data("level-words");
     var questionCounter = $("body").data("question-counter");
+    var levelId = $("body").data("level-id");
 
-    if (questionCounter > 0){
+    if (questionCounter <= levelWords.length - 1  && questionCounter >= 0){
+      executeGame(levelWords, questionCounter);
       questionCounter -= 1;
       $("body").data("question-counter", questionCounter);
-      executeGame(levelWords, questionCounter);
     }else{
-      openModal(gameConclusion);
+      gameConclusion = showGameConclusion(levelId)
+      openModal(gameConclusion, levelId);
+      questionCounter = levelWords.length - 1
+      $("body").data("question-counter", questionCounter);
     }
   });
 
-  $("body").on("click", ".back-to-levels", function(){
+  var removeLock = function(levelNumber){
+    var headings = document.getElementsByClassName("level-heading");
+    $(headings[levelNumber]).removeClass("locked");
+    var image = document.getElementById(parseInt(levelNumber)+1);
+    $(image).fadeOut();
+  }
+
+  $("body").on("click", ".study-done", function(){
     $(".modalDialog").remove();
+  });
+
+
+  $("body").on("click", ".game-done", function(){
+    var levelToUnlock = $(".game-done").attr("data");
+    numCorrectAnswers = 0;
+    $(".modalDialog").remove();
+    removeLock(levelToUnlock);
   });
 
   //switch between login and sign up form
