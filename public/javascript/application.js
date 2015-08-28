@@ -334,7 +334,7 @@ $(document).ready(function(){
                           "<div class='modal-congrats-content'>" +
                             "<h3 class='english_word'>Congratulations! Félicitations!</h3>" +
                             "<h3> You've reached the end!</h3>" +
-                            "<h2> You got " + numCorrectAnswers + " right!</h2>" +
+                            "<h5> You got " + numCorrectAnswers + " questions right!</h5>" +
                               "<button type='button' data='" + levelId + "' class='back-to-levels game-done'>Back to Levels</button>" +
                           "</div>" +
                         "</div>" +
