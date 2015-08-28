@@ -47,8 +47,6 @@ $(document).ready(function(){
       $("body").append('<br><br><div class="onoffswitch questions-added"> <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked> <label class="onoffswitch-label" for="myonoffswitch"> <span class="onoffswitch-inner"></span> <span class="onoffswitch-switch"></span> </label> </div>');
       $(".onoffswitch").fadeIn();
       for(var j=1; j <= headings.length; j++){
-        console.log("inside for loop")
-        // setTimeout(function(){ console.log("zzzzzzzzz");
         $(headings[j]).addClass("locked").add('<img id="'+(j+1)+'" class="locked-icon" src="https://cdn4.iconfinder.com/data/icons/whsr-january-flaticon-set/512/lock.png" style="'+
         'height: 50px;'+
         'vertical-align: text-bottom;'+
@@ -66,7 +64,6 @@ $(document).ready(function(){
       $(headings[i]).text("Level " + (i+1));
     }
 
-    // debugger;
 
     $(".topics-heading").addClass("level-heading");
 
@@ -374,10 +371,8 @@ $(document).ready(function(){
 
   var removeLock = function(levelNumber){
     var headings = document.getElementsByClassName("level-heading");
-    console.log(headings[levelNumber]);
     $(headings[levelNumber]).removeClass("locked");
     var image = document.getElementById(parseInt(levelNumber)+1);
-    console.log(image);
     $(image).fadeOut();
   }
 
@@ -388,7 +383,6 @@ $(document).ready(function(){
 
   $("body").on("click", ".game-done", function(){
     var levelToUnlock = $(".game-done").attr("data");
-    console.log(levelToUnlock)
     $(".modalDialog").remove();
     removeLock(levelToUnlock);
   });
