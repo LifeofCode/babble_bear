@@ -1,5 +1,6 @@
 Babble Bear
 =============
+This is a project that combines two major passions; teaching and web development. The goal of this project is to help children learn French through an interactive platform that uses JavaScript and Jquery on the front end and Ruby and Sinatra on the back end. 
 
 ## Learn French through Games! 
 
